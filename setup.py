@@ -3,16 +3,13 @@ from setuptools import setup, find_packages
 with open('README.md', mode='r', encoding='utf-8') as f:
     readme = f.read()
 
-test_requirements = [
-    'pytest', 'pytest-cov', 'codecov'
-]
+test_requirements = ['pytest', 'pytest-cov', 'codecov']
 required = ['pluggy']
 
 setup(
     name='repomate-plug',
     version='0.2.1',
-    description=(
-        'A CLI tool for managing large amounts of GitHub repositories'),
+    description='Core components for plugin system in repomate',
     long_description=readme,
     long_description_content_type='text/markdown',
     author='Simon Larsén',
