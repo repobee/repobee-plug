@@ -9,36 +9,28 @@ import pathlib
 import argparse
 import configparser
 import collections
+import functools
+from contextlib import contextmanager
 from typing import Union, Optional
+from enum import Enum
 
 import pluggy
+
+from repomate_plug import exception
 
 hookspec = pluggy.HookspecMarker(__package__)
 hookimpl = pluggy.HookimplMarker(__package__)
 
-pm = pluggy.PluginManager(__package__)
+manager = pluggy.PluginManager(__package__)
 
 HookResult = collections.namedtuple('HookResult', ('hook', 'status', 'msg'))
 
-# status messages
-ERROR = "error"
-WARNING = "warning"
-SUCCESS = "success"
 
-
-class Plugin:
-    """Wrapper class for plugin classes. Used to dynamically detect plugin
-    classes during plugin registration. Any plugin class must be decorated
-    with this class.
-    """
-
-    def __init__(self, class_):
-        assert isinstance(class_, type)  # sanity check
-        self._class = class_
-
-    def __call__(self, *args, **kwargs):
-        return self._class(*args, **kwargs)
-
+class Status(Enum):
+    """Status codes enum."""
+    SUCCESS = 'success'
+    WARNING = 'warning'
+    ERROR = 'error'
 
 class CloneHook:
     """Hook functions related to cloning repos."""
@@ -86,4 +78,4 @@ class CloneHook:
         """
 
 
-pm.add_hookspecs(CloneHook)
+manager.add_hookspecs(CloneHook)
