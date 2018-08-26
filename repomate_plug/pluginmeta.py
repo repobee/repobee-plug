@@ -28,7 +28,6 @@ class _PluginMeta(type):
         Checking signatures is delegated to ``pluggy`` during registration of
         the hook.
         """
-        print("processing {}".format(name))
         methods = cls._extract_public_methods(attrdict)
         cls._check_names(methods)
         hooked_methods = {
