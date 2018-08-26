@@ -27,3 +27,4 @@ This section will be fleshed out more in the future. For now, refer to
 repomate-junit4_ as an example, as well as the `repomate built-ins`_
 
 .. _repomate built-ins: https://repomate.readthedocs.io/en/latest/plugins.html#built-in-plugins
+.. _repomate-junit4: https://github.com/slarse/repomate-junit4
