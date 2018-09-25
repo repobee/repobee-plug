@@ -8,14 +8,14 @@ required = ['pluggy']
 
 setup(
     name='repomate-plug',
-    version='0.2.1',
+    version='0.3.0',
     description='Core components for plugin system in repomate',
     long_description=readme,
     long_description_content_type='text/markdown',
     author='Simon Larsén',
     author_email='slarse@kth.se',
     url='https://github.com/slarse/repomate-plug',
-    download_url='https://github.com/slarse/repomate-plug/archive/v0.2.1.tar.gz',
+    download_url='https://github.com/slarse/repomate-plug/archive/v0.3.0.tar.gz',
     license='MIT',
     packages=find_packages(exclude=('tests', 'docs')),
     tests_require=test_requirements,
