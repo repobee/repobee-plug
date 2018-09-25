@@ -67,7 +67,7 @@ class Plugin(metaclass=_PluginMeta):
     as a hook method.
 
     The signature of the method is not checked until the hook is registered by
-    the :py:constant:`repomate_plug.manager` (an instance of
+    the :py:const:`repomate_plug.manager` (an instance of
     :py:class:`pluggy.manager.PluginManager`). Therefore, when testing a plugin,
     it is a good idea to include a test where it is registered with the manager
     to ensure that it has the correct signatures.

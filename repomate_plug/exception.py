@@ -13,5 +13,5 @@ class PlugError(Exception):
 
 class HookNameError(PlugError):
     """Raise when a public method in a class that inherits from
-    :py:name:`~repomate_plug.Plugin` does not have a hook name.
+    :py:class:`~repomate_plug.Plugin` does not have a hook name.
     """
