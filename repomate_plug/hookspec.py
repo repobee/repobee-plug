@@ -32,16 +32,19 @@ class Status(Enum):
     WARNING = 'warning'
     ERROR = 'error'
 
+
 class CloneHook:
     """Hook functions related to cloning repos."""
 
     @hookspec
     def act_on_cloned_repo(
-            self, path: Union[str, pathlib.Path]) -> Optional[HookResult]:
+            self, path: Union[str, pathlib.Path],
+            api) -> Optional[HookResult]:
         """Do something with a cloned repo.
 
         Args:
             path: Path to the repo.
+            api: An instance of :py:class:`repomate.github_api.GitHubAPI`.
 
         Returns:
             optionally returns a HookResult namedtuple for reporting the
