@@ -7,6 +7,8 @@ from repomate_plug.util import Status
 from repomate_plug.corehooks import PeerReviewHook as _peer_hook
 from repomate_plug.exthooks import CloneHook as _clone_hook
 
+__version__ = '0.4.0'
+
 manager = pluggy.PluginManager(__package__)
 manager.add_hookspecs(_clone_hook)
 manager.add_hookspecs(_peer_hook)
