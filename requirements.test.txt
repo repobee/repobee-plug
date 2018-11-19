@@ -3,6 +3,6 @@ codecov
 pluggy
 pytest
 pytest-cov
-sphinx
+sphinx>=1.8.2
 sphinx-autodoc-typehints
 sphinx_rtd_theme
