@@ -1,3 +1,4 @@
+pip>=10
 codecov
 pluggy
 pytest
