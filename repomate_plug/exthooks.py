@@ -1,45 +1,30 @@
-"""Hook specifications.
+"""Hookspecs for repomate extension hooks.
 
-.. module:: hookspec
-    :synopsis: Hook specifications.
+Extension hooks add something to the functionality of repomate, but are not
+necessary for its operation. Currently, all extension hooks are related to
+cloning repos.
+
+.. module:: exthooks
+    :synopsis: Hookspecs for repomate extension hooks.
 
 .. moduleauthor:: Simon Larsén
 """
+
 import pathlib
 import argparse
 import configparser
-import collections
-import functools
-from contextlib import contextmanager
-from typing import Union, Optional
-from enum import Enum
+from typing import Union, Optional, Iterable, List, Mapping, Callable
 
-import pluggy
-
-from repomate_plug import exception
-
-hookspec = pluggy.HookspecMarker(__package__)
-hookimpl = pluggy.HookimplMarker(__package__)
-
-manager = pluggy.PluginManager(__package__)
-
-HookResult = collections.namedtuple('HookResult', ('hook', 'status', 'msg'))
-
-
-class Status(Enum):
-    """Status codes enum."""
-    SUCCESS = 'success'
-    WARNING = 'warning'
-    ERROR = 'error'
+from repomate_plug.util import hookspec
+from repomate_plug.util import HookResult
 
 
 class CloneHook:
     """Hook functions related to cloning repos."""
 
     @hookspec
-    def act_on_cloned_repo(
-            self, path: Union[str, pathlib.Path],
-            api) -> Optional[HookResult]:
+    def act_on_cloned_repo(self, path: Union[str, pathlib.Path],
+                           api) -> Optional[HookResult]:
         """Do something with a cloned repo.
 
         Args:
@@ -79,6 +64,3 @@ class CloneHook:
         Args:
             config: the config parser after config has been read.
         """
-
-
-manager.add_hookspecs(CloneHook)

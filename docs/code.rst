@@ -9,16 +9,23 @@ API
 .. automodule:: repomate_plug
     :members:
 
-hookspec
-========
-
-.. automodule:: repomate_plug.hookspec
-    :members:
-
 pluginmeta
 ==========
 
 .. automodule:: repomate_plug.pluginmeta
+    :members:
+
+
+corehooks
+=========
+
+.. automodule:: repomate_plug.corehooks
+    :members:
+
+exthooks
+========
+
+.. automodule:: repomate_plug.exthooks
     :members:
 
 exception
