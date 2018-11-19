@@ -10,7 +10,8 @@ Welcome to repomate-plug's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   writing_plugins
+   overview
+   implementing
    code
 
 

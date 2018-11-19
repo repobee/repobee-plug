@@ -13,7 +13,7 @@ cloning repos.
 import pathlib
 import argparse
 import configparser
-from typing import Union, Optional, Iterable, List, Mapping, Callable
+from typing import Union, Optional
 
 from repomate_plug.util import hookspec
 from repomate_plug.util import HookResult
@@ -54,7 +54,7 @@ class CloneHook:
 
         Args:
             args: The full namespace returned by
-            :py:func:`argparse.ArgumentParser.parse_args`
+                :py:func:`argparse.ArgumentParser.parse_args`
         """
 
     @hookspec
