@@ -12,6 +12,7 @@ Welcome to repomate-plug's documentation!
 
    overview
    implementing
+   external
    code
 
 
