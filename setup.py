@@ -11,7 +11,7 @@ with open('repomate_plug/__version.py', mode='r', encoding='utf-8') as f:
     assert re.match(r'^\d\.\d\.\d$', __version__)
 
 test_requirements = ['pytest', 'pytest-cov', 'codecov']
-required = ['pluggy']
+required = ['pluggy>=0.8.0']
 
 setup(
     name='repomate-plug',
