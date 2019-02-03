@@ -1,6 +1,5 @@
 codecov
-pluggy
-pytest
+pytest>=4.0.0
 pytest-cov
 sphinx>=1.8.2
 sphinx-autodoc-typehints
