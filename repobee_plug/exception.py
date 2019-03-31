@@ -1,17 +1,17 @@
-"""Exceptions for repomate_plug.
+"""Exceptions for repobee_plug.
 
 .. module:: exception
-    :synopsis: Exceptions for repomate_plug.
+    :synopsis: Exceptions for repobee_plug.
 
 .. moduleauthor:: Simon Larsén
 """
 
 
 class PlugError(Exception):
-    """Base class for all repomate_plug exceptions."""
+    """Base class for all repobee_plug exceptions."""
 
 
 class HookNameError(PlugError):
     """Raise when a public method in a class that inherits from
-    :py:class:`~repomate_plug.Plugin` does not have a hook name.
+    :py:class:`~repobee_plug.Plugin` does not have a hook name.
     """

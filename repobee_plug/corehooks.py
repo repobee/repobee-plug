@@ -1,19 +1,19 @@
-"""Hookspecs for repomate core hooks.
+"""Hookspecs for repobee core hooks.
 
-Core hooks provide the basic functionality of repomate. These hooks all have
+Core hooks provide the basic functionality of repobee. These hooks all have
 default implementations, but are overridden by any other implementation. All
 hooks in this module should have the `firstresult=True` option to the hookspec
 to allow for this dynamic override.
 
 .. module:: corehooks
-    :synopsis: Hookspecs for repomate core hooks.
+    :synopsis: Hookspecs for repobee core hooks.
 
 .. moduleauthor:: Simon Larsén
 """
 
 from typing import Union, Optional, Iterable, List, Mapping, Callable
 
-from repomate_plug.util import hookspec
+from repobee_plug.util import hookspec
 
 
 class PeerReviewHook:

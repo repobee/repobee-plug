@@ -1,7 +1,7 @@
-"""Utility classes and functions for repomate-plug.
+"""Utility classes and functions for repobee-plug.
 
 .. module:: util
-    :synopsis: Utility classes and functions for repomate-plug.
+    :synopsis: Utility classes and functions for repobee-plug.
 
 .. moduleauthor:: Simon Larsén
 """

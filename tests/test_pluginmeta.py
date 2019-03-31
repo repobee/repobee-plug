@@ -1,7 +1,7 @@
 import pytest
 import pluggy
-from repomate_plug import pluginmeta
-from repomate_plug import exception
+from repobee_plug import pluginmeta
+from repobee_plug import exception
 
 
 class TestPluginInheritance:

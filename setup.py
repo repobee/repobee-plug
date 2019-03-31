@@ -5,7 +5,7 @@ with open('README.md', mode='r', encoding='utf-8') as f:
     readme = f.read()
 
 # parse the version instead of importing it to avoid dependency-related crashes
-with open('repomate_plug/__version.py', mode='r', encoding='utf-8') as f:
+with open('repobee_plug/__version.py', mode='r', encoding='utf-8') as f:
     line = f.readline()
     __version__ = line.split('=')[1].strip(" '\"\n")
     assert re.match(r'^\d\.\d\.\d$', __version__)
@@ -14,15 +14,15 @@ test_requirements = ['pytest>=4.0.0', 'pytest-cov', 'codecov']
 required = ['pluggy>=0.8.0']
 
 setup(
-    name='repomate-plug',
+    name='repobee-plug',
     version=__version__,
-    description='Core components for plugin system in repomate',
+    description='Core components for plugin system in repobee',
     long_description=readme,
     long_description_content_type='text/markdown',
     author='Simon Larsén',
     author_email='slarse@kth.se',
-    url='https://github.com/slarse/repomate-plug',
-    download_url='https://github.com/slarse/repomate-plug/archive/v{}.tar.gz'.
+    url='https://github.com/repobee/repobee-plug',
+    download_url='https://github.com/repobee/repobee-plug/archive/v{}.tar.gz'.
     format(__version__),
     license='MIT',
     packages=find_packages(exclude=('tests', 'docs')),
