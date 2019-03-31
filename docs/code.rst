@@ -1,35 +1,35 @@
 .. _modref:
 
-``repomate_plug`` Module Reference
+``repobee_plug`` Module Reference
 **********************************
 
 API
 ===
 
-.. automodule:: repomate_plug
+.. automodule:: repobee_plug
     :members:
 
 pluginmeta
 ==========
 
-.. automodule:: repomate_plug.pluginmeta
+.. automodule:: repobee_plug.pluginmeta
     :members:
 
 
 corehooks
 =========
 
-.. automodule:: repomate_plug.corehooks
+.. automodule:: repobee_plug.corehooks
     :members:
 
 exthooks
 ========
 
-.. automodule:: repomate_plug.exthooks
+.. automodule:: repobee_plug.exthooks
     :members:
 
 exception
 =========
 
-.. automodule:: repomate_plug.exception
+.. automodule:: repobee_plug.exception
     :members:

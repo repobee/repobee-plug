@@ -1,11 +1,11 @@
-"""Hookspecs for repomate extension hooks.
+"""Hookspecs for repobee extension hooks.
 
-Extension hooks add something to the functionality of repomate, but are not
+Extension hooks add something to the functionality of repobee, but are not
 necessary for its operation. Currently, all extension hooks are related to
 cloning repos.
 
 .. module:: exthooks
-    :synopsis: Hookspecs for repomate extension hooks.
+    :synopsis: Hookspecs for repobee extension hooks.
 
 .. moduleauthor:: Simon Larsén
 """
@@ -15,8 +15,8 @@ import argparse
 import configparser
 from typing import Union, Optional
 
-from repomate_plug.util import hookspec
-from repomate_plug.util import HookResult
+from repobee_plug.util import hookspec
+from repobee_plug.util import HookResult
 
 
 class CloneHook:
@@ -29,7 +29,7 @@ class CloneHook:
 
         Args:
             path: Path to the repo.
-            api: An instance of :py:class:`repomate.github_api.GitHubAPI`.
+            api: An instance of :py:class:`repobee.github_api.GitHubAPI`.
 
         Returns:
             optionally returns a HookResult namedtuple for reporting the

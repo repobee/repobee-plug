@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# repomate-plug documentation build configuration file, created by
+# repobee-plug documentation build configuration file, created by
 # sphinx-quickstart on Thu Jun 29 18:11:20 2017.
 #
 # This file is execfile()d with the current directory set to its
@@ -59,7 +59,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'repomate-plug'
+project = 'repobee-plug'
 copyright = '2018, Simon Larsén'
 author = 'Simon Larsén'
 
@@ -111,7 +111,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'repomate_plug_namedoc'
+htmlhelp_basename = 'repobee_plug_namedoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -137,7 +137,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'repomate_plug_name.tex',
+    (master_doc, 'repobee_plug_name.tex',
      '\\{cookiecutter.app\\_name\\} Documentation',
      '\\{cookiecutter.author\\_name\\}', 'manual'),
 ]
@@ -146,7 +146,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, 'repomate_plug_name', 'repomate-plug Documentation', [author],
+man_pages = [(master_doc, 'repobee_plug_name', 'repobee-plug Documentation', [author],
               1)]
 
 # -- Options for Texinfo output -------------------------------------------
@@ -155,8 +155,8 @@ man_pages = [(master_doc, 'repomate_plug_name', 'repomate-plug Documentation', [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'repomate_plug_name', 'repomate-plug Documentation', author,
-     'repomate_plug_name', 'One line description of project.', 'Miscellaneous'),
+    (master_doc, 'repobee_plug_name', 'repobee-plug Documentation', author,
+     'repobee_plug_name', 'One line description of project.', 'Miscellaneous'),
 ]
 
 # Example configuration for intersphinx: refer to the Python standard library.

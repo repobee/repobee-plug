@@ -1,9 +1,9 @@
-.. repomate documentation master file, created by
+.. repobee documentation master file, created by
    sphinx-quickstart on Thu Jun 29 18:11:20 2017.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to repomate-plug's documentation!
+Welcome to repobee-plug's documentation!
 ==================================================
 
 .. toctree::

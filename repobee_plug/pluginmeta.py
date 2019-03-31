@@ -1,9 +1,9 @@
 from typing import Dict, List
 
-from repomate_plug import exception
-from repomate_plug import corehooks
-from repomate_plug import exthooks
-from repomate_plug import util
+from repobee_plug import exception
+from repobee_plug import corehooks
+from repobee_plug import exthooks
+from repobee_plug import util
 
 _HOOK_METHODS = {
     key: value
@@ -27,7 +27,7 @@ class _PluginMeta(type):
         """Check that all public methods have hook names, convert to hook
         methods and return a new instance of the class. If there are any
         public methods that have non-hook names,
-        :py:function:`repomate_plug.exception.HookNameError` is raised.
+        :py:function:`repobee_plug.exception.HookNameError` is raised.
 
         Checking signatures is delegated to ``pluggy`` during registration of
         the hook.
@@ -62,16 +62,16 @@ class _PluginMeta(type):
 
 class Plugin(metaclass=_PluginMeta):
     """Base class for plugin classes. For plugin classes to be picked up by
-    ``repomate``, they must inherit from this class.
+    ``repobee``, they must inherit from this class.
 
     Public methods must be hook methods, i.e. implement the specification of
-    one of the hooks defined in :py:mod:`~repomate_plug.corehooks.PeerReviewHook`
-    or :py:mod:`~repomate_plug.exthooks.CloneHook`.  If there are any other
+    one of the hooks defined in :py:mod:`~repobee_plug.corehooks.PeerReviewHook`
+    or :py:mod:`~repobee_plug.exthooks.CloneHook`.  If there are any other
     public methods, an error is raised on class creation. As long as the method
     has the correct name, it will be recognized as a hook method.
 
     The signature of the method is not checked until the hook is registered by
-    the :py:const:`repomate_plug.manager` (an instance of
+    the :py:const:`repobee_plug.manager` (an instance of
     :py:class:`pluggy.manager.PluginManager`). Therefore, when testing a plugin,
     it is a good idea to include a test where it is registered with the manager
     to ensure that it has the correct signatures.

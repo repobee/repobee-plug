@@ -2,7 +2,7 @@ language: python
 branches:
   only:
   - master
-  - /^v\d+\.\d+\.\d+$/
+  - "/^v\\d+\\.\\d+\\.\\d+$/"
 matrix:
   include:
   - os: linux
@@ -34,7 +34,7 @@ notifications:
   slack:
     on_success: change
     on_failure: always
-    secure: Cq4Y2dwkNNE7hIZSEtmvNHI/2TZYzKpAJqbb6QPKG0hilx3PGetbs7fWy+ru6gRVW7A494Yk/4+ZO/9A92Pn0QHbbWtJZuU61pC2zxtkH2VKAzMVFly4gkL7L5Q9B8drAoer1usI4OtlN7eyqegTGAT8NEbhaynsJweEDZbWCWoXdQkl4tX6pYyDX/6HAWkfsQLaLPczLACyKYl812qAt7u6fFD+hcjdVrs/LfM9Cdt1gW3t9cVNm/Lqmla+I5OYjRRgbHm4XgsTrhNR0IoAxbktcxSwemnjTzwTsn7VQ9y4t8NlBRB5LUfw/0ihehKl7O4QS2c1G1uLhKHZZSfU8Di/qGGSvj/QBFvyZPDA8a/fmMBrNIHwy4k46l1ZfdDnX65oDbncHuXcFOVlTx85C5Zpy86tQDVktXf3kDlzsUtLgKtAY5dvLMDAwTvkX5M05DMwC51A+b2wsM1zs14CkeTFjHfsBIhDek91YfUEx6dRmnhg1KXVA+q02DKNoI0D5sNkOcgBnVATQOo29zcRKnyit93LBG3EiQYiIhubtwMkveXlEE3Qd5bUSdVuTMObN2nhm1bmYGrJ68dR+zKbsBZ51fcar6YeecmLCF6epBcZI++3AEH5/gu4qXb7A2pbxtiARJtxliI83d6CwEycPWhpjQ4p5UnByMhvKnKv14w=
+    secure: tBJhjtY/29jPzwQAO30aT7mdEHfW+eW1CEhMaOqJ2yp+rRVOXazdgEz2+yTkN1FID/dlTcsadQQ7pjG1kswcRNqncqkz4i95zxyyE8lL7NnYW5fV6TeRjPD4ddPVR8mGdQj2fvl4YRQgpLqlucfUantjairv6ztKD7pQILNcU9JRoz87MkI++PA6ZZ4Y5J0lKTSqNBrAY6Lx7KM1R1r87UQcF8LV6JTbVUrUVC+mfeR+EO8RpX5jezjNNktR4H1Eob/8lXFHC3lXJwRd7wwK1mK+Z+5oAI5bgs5wprQyqZ5FddQGabMkr5+FaU5j94zyMlCiyX7RglMGGSYAnC0093EX2qLz/sKbz9fPBuBXTBYtdgOIp5u4DDF6nFZKN7M3NyZ0eZc/UJfgOSuA4N1GsCgU3uRyNit5OHvEUC+fDhve8U8CzOjefbtoYS0JYyM+um4gejkzZFw/RDbyx0J7VswP4IsJT6LEfZeBFVmUKAFbioY6jQK4QGSsYsW+YnjQsY6f/Ui3PszuNRJqm36kTbLrZ/x8JuEr9jbp82vZR1G1Yt6XCmsWDR2BAIHaRxsg4hxziNPEbrbVUy+l0T3oWWmSVmfyYLQHX+i+k2itfaXoXpbAsYDpkukfh8MIL9jlIkJ/wYHZBEO4Zp/t/4a3jcrXfnEhk6cesHP+k4kVb9A=
 deploy:
   provider: pypi
   user: slarse
@@ -42,7 +42,7 @@ deploy:
     tags: true
     condition: $TRAVIS_OS_NAME = "linux"
   password:
-    secure: ngvAvxQN8RFQJYFi9wNFnYXJqQsqelfCoujkmY0+Vx9FLH9+KCbIj43gPC4wfRHYFW5qZlTdmnMG0vDcGV1zE+DFOEk6GNvf2mX3onUZMcpR0+GbNTAw/MqbJnmIgf2B7eaIBbpraZvFwHAsCi79Nq6/w26bozfV1jyxFCtw/Z0KNdHPxvncAvtVOyjc65mo/+4eDsIvza3c+uzi96O5dWrpbt1klI5bkC4oSZtiF3UJ1wPeaXXAO4TyCNSBze1cP5VnCtz9N44lxrxZBDb56fujT/RKzXpeQjHkmJ1nS6K7D86/sLuV4l9905+1OniBlrhyOu6RCKoIc3xpDmsxWTLpP4bafcJO/1TMAyWofnAn/tumlles0U0CRKwIaMpbSv5lwDDcbVBaJnKe08dH/7R/OKQhXSXMH3psGUOmHuVBnR5hNgarr9MqCZr2gPQtoCwU3And6AnBEH16f1OV+kxCYEhaPH9lToHIRWPJ8sIcTMkouiG0AX6oQOGVYV0F/lqCaJGcZqvqEwglmn42xPCoDM2pM5flsaZ1th6qkXj17sBl7MZLVCj7fiIJBK+rLLuJpZWSBEsBKhjQ2UAcg7G9wYhVcF7dLhQUrgt6DrqnebC+q6Ln80E7NNFXhmxmxTQi5taZ2r/7DzCw/I1T5EGjZyi0T4Innngg1Io/O74=
+    secure: ibuuOvtIkokpbIQy2Jle5U/lnndzH/DxNAPcuXZktYN4koUTLZkBU34aaG//1mJv1NFhp4me/IQ3DAY+dB6LPb+vTNqCDrkItvGUWEXbhPKgxwX3UgeKl05sK2sgd9ZssmR+aBWz/nojmks05KsvtM6UWCCEJzIFwkWjZYeKJtRevhGwDj7nVrwVQ7DT1wvhb3J1lxduwTpxUzEeWSAMpYrg79pdhXkjk7AHoFpqql2Ylw8OOejSwQebWXYETkBpzqPJ7YqoqISNB9/u+2A+jZ5jiB+d/hHV9Hmmcw4xckOUvO4uPAWsr+eBOSF/aPt+ca6GYfoqPNpimlfcCsr1iCmTI9oB1wuXAqAZ0zO9JvWTo/GeVroga0xqcgsf6vOEotXU+un1WAyZq3+6ZCYErRDeNW6XOQ3unb4qR1NcuozQTNJNfOySu/1YfJkuDUHMXrZJKXqmb33HFnwxH5kOF6WNNcsReFF45HVRx/cuPf0jzvk1/wjDUl9UK6FCAzSsAs/5Fcp3E3BdHmiBkN/Mw2BkUqm5PbUyTg13oVLhbQYCTjWt5M//TR+gaS4xz7jkVTBPr+/l1kniwxVEdzt+uP1vd25KyY+bLZ8h0OsRNTkLUei41kao5Ge5Im4ZSAXUwoR9c7Fh+AtGFe0IyxqsYluZPjha1AQkAhFwQc8kHlA=
   distributions: sdist bdist_wheel
-  repo: slarse/repomate-plug
+  repo: repobee/repobee-plug
   skip_existing: true
