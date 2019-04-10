@@ -7,8 +7,8 @@ with open('README.md', mode='r', encoding='utf-8') as f:
 # parse the version instead of importing it to avoid dependency-related crashes
 with open('repobee_plug/__version.py', mode='r', encoding='utf-8') as f:
     line = f.readline()
-    __version__ = line.split('=')[1].strip(" '\"\n")
-    assert re.match(r'^\d\.\d\.\d$', __version__)
+    __version__ = line.split("=")[1].strip(" '\"\n")
+    assert re.match(r"^\d+(\.\d+){2}$", __version__)
 
 test_requirements = ['pytest>=4.0.0', 'pytest-cov', 'codecov']
 required = ['pluggy>=0.8.0']
