@@ -6,7 +6,7 @@ from repobee_plug import exception
 
 class TestPluginInheritance:
     def test_raises_on_non_hook_public_method(self):
-        with pytest.raises(exception.HookNameError) as exc:
+        with pytest.raises(exception.HookNameError) as exc_info:
 
             class Derived(pluginmeta.Plugin):
                 """Has the hook method config_hook and a non-hook method called
@@ -18,9 +18,9 @@ class TestPluginInheritance:
                 def some_method(self, x, y):
                     return x + y
 
-        assert "public method(s) with non-hook name" in str(exc)
-        assert "some_method" in str(exc)
-        assert "config_hook" not in str(exc)
+        assert "public method(s) with non-hook name" in str(exc_info.value)
+        assert "some_method" in str(exc_info.value)
+        assert "config_hook" not in str(exc_info.value)
 
     def test_happy_path(self):
         """Test that a class can be defined when all public methods are have
@@ -42,9 +42,9 @@ class TestPluginInheritance:
             def config_hook(self, config_parser):
                 pass
 
-            def generate_review_allocations(self, master_repo_name, students,
-                                            num_reviews,
-                                            review_team_name_function):
+            def generate_review_allocations(
+                self, master_repo_name, students, num_reviews, review_team_name_function
+            ):
                 pass
 
     def test_with_private_methods(self):
@@ -65,9 +65,9 @@ class TestPluginInheritance:
             def config_hook(self, config_parser):
                 pass
 
-            def generate_review_allocations(self, master_repo_name, students,
-                                            num_reviews,
-                                            review_team_name_function):
+            def generate_review_allocations(
+                self, master_repo_name, students, num_reviews, review_team_name_function
+            ):
                 pass
 
             def _some_method(self, x, y):
