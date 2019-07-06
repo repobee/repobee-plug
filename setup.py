@@ -10,7 +10,7 @@ with open('repobee_plug/__version.py', mode='r', encoding='utf-8') as f:
     __version__ = line.split("=")[1].strip(" '\"\n")
     assert re.match(r"^\d+(\.\d+){2}$", __version__)
 
-test_requirements = ['pytest>=4.0.0', 'pytest-cov', 'codecov']
+test_requirements = ['pytest>=4.0.0', 'pytest-cov', 'codecov', 'tox']
 required = ['pluggy>=0.8.0']
 
 setup(
