@@ -11,7 +11,7 @@ to allow for this dynamic override.
 .. moduleauthor:: Simon Larsén
 """
 
-from typing import Union, Optional, Iterable, List, Mapping, Callable
+from typing import Union, Optional, Iterable, List, Mapping, Callable, Tuple
 
 from repobee_plug.util import hookspec
 
@@ -21,9 +21,11 @@ class PeerReviewHook:
 
     @hookspec(firstresult=True)
     def generate_review_allocations(
-            self, master_repo_name: str, students: Iterable[str],
-            num_reviews: int,
-            review_team_name_function: Callable[[str, str], str]
+        self,
+        master_repo_name: str,
+        students: Iterable[str],
+        num_reviews: int,
+        review_team_name_function: Callable[[str, str], str],
     ) -> Mapping[str, List[str]]:
         """Generate a (peer_review_team -> reviewers) mapping for each student
         repository (i.e. <student>-<master_repo_name>), where len(reviewers) =
@@ -51,4 +53,26 @@ class PeerReviewHook:
                 returns a review team name.
         Returns:
             a (peer_review_team -> reviewers) mapping for each student repository.
+        """
+
+
+class APIHook:
+    """Hooks related to platform APIs."""
+
+    @hookspec(firstresult=True)
+    def get_api_class(self):
+        """Return an API platform class. Must be a subclass of apimeta.API.
+        
+        Returns:
+            An apimeta.API subclass.
+        """
+
+    @hookspec(firstresult=True)
+    def api_init_requires(self) -> Tuple[str]:
+        """Return which of the arguments to apimeta.APISpec.__init__ that the
+        given API requires. For example, the GitHubAPI requires all, but the
+        GitLabAPI does not require ``user``.
+
+        Returns:
+            Names of the required arguments.
         """

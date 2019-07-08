@@ -47,6 +47,12 @@ class TestPluginInheritance:
             ):
                 pass
 
+            def get_api_class(self):
+                pass
+
+            def api_init_requires(self):
+                pass
+
     def test_with_private_methods(self):
         """Private methods should be able to have any names."""
 
@@ -68,6 +74,12 @@ class TestPluginInheritance:
             def generate_review_allocations(
                 self, master_repo_name, students, num_reviews, review_team_name_function
             ):
+                pass
+
+            def get_api_class(self):
+                pass
+
+            def api_init_requires(self):
                 pass
 
             def _some_method(self, x, y):
