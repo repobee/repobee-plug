@@ -23,8 +23,9 @@ class CloneHook:
     """Hook functions related to cloning repos."""
 
     @hookspec
-    def act_on_cloned_repo(self, path: Union[str, pathlib.Path],
-                           api) -> Optional[HookResult]:
+    def act_on_cloned_repo(
+        self, path: Union[str, pathlib.Path], api
+    ) -> Optional[HookResult]:
         """Do something with a cloned repo.
 
         Args:
