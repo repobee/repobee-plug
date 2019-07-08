@@ -9,8 +9,10 @@ _HOOK_METHODS = {
     key: value
     for key, value in [
         *exthooks.CloneHook.__dict__.items(),
-        *corehooks.PeerReviewHook.__dict__.items()
-    ] if callable(value) and not key.startswith('_')
+        *corehooks.PeerReviewHook.__dict__.items(),
+        *corehooks.APIHook.__dict__.items(),
+    ]
+    if callable(value) and not key.startswith("_")
 }
 
 
@@ -35,8 +37,7 @@ class _PluginMeta(type):
         methods = cls._extract_public_methods(attrdict)
         cls._check_names(methods)
         hooked_methods = {
-            name: util.hookimpl(method)
-            for name, method in methods.items()
+            name: util.hookimpl(method) for name, method in methods.items()
         }
         attrdict.update(hooked_methods)
 
@@ -49,14 +50,16 @@ class _PluginMeta(type):
         if not method_names.issubset(hook_names):
             raise exception.HookNameError(
                 "public method(s) with non-hook name: {}".format(
-                    ", ".join(method_names - hook_names)))
+                    ", ".join(method_names - hook_names)
+                )
+            )
 
     @staticmethod
     def _extract_public_methods(attrdict):
         return {
             key: value
             for key, value in attrdict.items()
-            if callable(value) and not key.startswith('_')
+            if callable(value) and not key.startswith("_")
         }
 
 
