@@ -15,9 +15,9 @@ import argparse
 import configparser
 from typing import Union, Optional
 
-from repobee_plug.util import hookspec
-from repobee_plug.util import HookResult
-from repobee_plug.util import ExtensionCommand
+from repobee_plug.containers import hookspec
+from repobee_plug.containers import HookResult
+from repobee_plug.containers import ExtensionCommand
 
 
 class CloneHook:
@@ -75,7 +75,7 @@ class ExtensionCommandHook:
     def create_extension_command(self) -> ExtensionCommand:
         """Create an extension command to add to the RepoBee CLI. The command will
         be added as one of the top-level subcommands of RepoBee. It should return
-        an :py:class:`~repobee_plug.util.ExtensionCommand`.
+        an :py:class:`~repobee_plug.containers.ExtensionCommand`.
 
         .. code-block:: python
             
@@ -84,7 +84,7 @@ class ExtensionCommandHook:
         The ``command`` function will be called if the extension command is used
         on the command line.
 
-        Note that the :py:class:`~repobee_plug.util.RepoBeeExtensionParser` class
+        Note that the :py:class:`~repobee_plug.containers.RepoBeeExtensionParser` class
         is just a thin wrapper around :py:class:`argparse.ArgumentParser`, and can
         be used in an identical manner. The following is an example definition
         of this hook that adds a subcommand called ``example-command``, that can
@@ -120,5 +120,5 @@ class ExtensionCommandHook:
             initialize the api and pass it in.
 
         Returns:
-            A :py:class:`~repobee_plug.util.ExtensionCommand`.
+            A :py:class:`~repobee_plug.containers.ExtensionCommand`.
         """

@@ -2,11 +2,11 @@ import pluggy
 
 from repobee_plug.__version import __version__
 from repobee_plug.pluginmeta import Plugin
-from repobee_plug.util import hookimpl as repobee_hook
-from repobee_plug.util import HookResult
-from repobee_plug.util import Status
-from repobee_plug.util import RepoBeeExtensionParser
-from repobee_plug.util import ExtensionCommand
+from repobee_plug.containers import hookimpl as repobee_hook
+from repobee_plug.containers import HookResult
+from repobee_plug.containers import Status
+from repobee_plug.containers import ExtensionParser
+from repobee_plug.containers import ExtensionCommand
 from repobee_plug.corehooks import PeerReviewHook as _peer_hook
 from repobee_plug.corehooks import APIHook as _api_hook
 from repobee_plug.exthooks import CloneHook as _clone_hook
@@ -24,6 +24,6 @@ __all__ = [
     "repobee_hook",
     "HookResult",
     "Status",
-    "RepoBeeExtensionParser",
+    "ExtensionParser",
     "ExtensionCommand",
 ]

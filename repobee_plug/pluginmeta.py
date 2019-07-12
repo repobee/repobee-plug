@@ -3,7 +3,7 @@ from typing import Dict, List
 from repobee_plug import exception
 from repobee_plug import corehooks
 from repobee_plug import exthooks
-from repobee_plug import util
+from repobee_plug import containers
 
 _HOOK_METHODS = {
     key: value
@@ -38,7 +38,7 @@ class _PluginMeta(type):
         methods = cls._extract_public_methods(attrdict)
         cls._check_names(methods)
         hooked_methods = {
-            name: util.hookimpl(method) for name, method in methods.items()
+            name: containers.hookimpl(method) for name, method in methods.items()
         }
         attrdict.update(hooked_methods)
 

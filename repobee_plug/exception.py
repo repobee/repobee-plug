@@ -18,6 +18,6 @@ class HookNameError(PlugError):
 
 
 class ExtensionCommandError(PlugError):
-    """Raise when an :py:class:~repobee_plug.util.ExtensionCommand: is
+    """Raise when an :py:class:~repobee_plug.containers.ExtensionCommand: is
     incorrectly defined.
     """
