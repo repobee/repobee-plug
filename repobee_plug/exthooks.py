@@ -102,9 +102,9 @@ class ExtensionCommandHook:
                 return plug.ExtensionCommand(
                     parser=parser,
                     name="example-command",
-                    help="Config wizard",
-                    description="Description of config wizard",
-                    callback=command,
+                    help="An example command",
+                    description="Description of an example command",
+                    callback=callback,
                 )
 
         .. important:
