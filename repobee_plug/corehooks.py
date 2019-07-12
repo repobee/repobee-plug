@@ -13,7 +13,7 @@ to allow for this dynamic override.
 
 from typing import Union, Optional, Iterable, List, Mapping, Callable, Tuple
 
-from repobee_plug.util import hookspec
+from repobee_plug.containers import hookspec
 
 
 class PeerReviewHook:

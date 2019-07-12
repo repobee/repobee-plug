@@ -15,6 +15,11 @@ pluginmeta
 .. automodule:: repobee_plug.pluginmeta
     :members:
 
+containers
+==========
+
+.. automodule:: repobee_plug.containers
+    :members:
 
 corehooks
 =========

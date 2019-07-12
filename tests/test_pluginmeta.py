@@ -53,6 +53,9 @@ class TestPluginInheritance:
             def api_init_requires(self):
                 pass
 
+            def create_extension_command(self):
+                pass
+
     def test_with_private_methods(self):
         """Private methods should be able to have any names."""
 
@@ -80,6 +83,9 @@ class TestPluginInheritance:
                 pass
 
             def api_init_requires(self):
+                pass
+
+            def create_extension_command(self):
                 pass
 
             def _some_method(self, x, y):
