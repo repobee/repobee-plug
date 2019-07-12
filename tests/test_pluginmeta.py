@@ -87,6 +87,7 @@ class TestPluginInheritance:
 
             def create_extension_command(self):
                 pass
+
             def _some_method(self, x, y):
                 return x + y
 
