@@ -55,11 +55,11 @@ class PeerReviewHook:
         .. note::
 
             Respecting the ``num_reviews`` argument is optional: only do it if
-            it makes sense.
+            it makes sense. It's good practice to issue a warning if
+            num_reviews is ignored, however.
 
         Args:
-            team: A list of student :py:class:`~repobee_plug.apimeta.Team`
-                tuples.
+            team: A list of :py:class:`~repobee_plug.apimeta.Team` tuples.
             num_reviews: Amount of reviews each student should perform (and
                 consequently amount of reviewers per repo)
         Returns:
