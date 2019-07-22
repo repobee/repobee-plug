@@ -13,6 +13,8 @@ to allow for this dynamic override.
 
 from typing import Union, Optional, Iterable, List, Mapping, Callable, Tuple
 
+from repobee_plug import apimeta
+from repobee_plug import containers
 from repobee_plug.containers import hookspec
 
 
@@ -21,38 +23,47 @@ class PeerReviewHook:
 
     @hookspec(firstresult=True)
     def generate_review_allocations(
-        self,
-        master_repo_name: str,
-        students: Iterable[str],
-        num_reviews: int,
-        review_team_name_function: Callable[[str, str], str],
-    ) -> Mapping[str, List[str]]:
-        """Generate a (peer_review_team -> reviewers) mapping for each student
-        repository (i.e. <student>-<master_repo_name>), where len(reviewers) =
-        num_reviews.
+        self, teams: List[apimeta.Team], num_reviews: int
+    ) -> List[containers.ReviewAllocation]:
+        """Generate :py:class:`~repobee_plug.containers.ReviewAllocation`
+        tuples from the provided teams, given that this concerns reviews for a
+        single master repo.
 
-        review_team_name_function should be used to generate review team names.
-        It should be called like:
+        The provided teams of students should be treated as units. That is to
+        say, if there are multiple members in a team, they should always be
+        assigned to the same review team. The best way to merge two teams 
+        ``team_a`` and ``team_b`` into one review team is to simply do:
 
         .. code-block:: python
             
-            review_team_name_function(master_repo_name, student)
+            team_c = apimeta.Team(members=team_a.members + team_b.members)
 
-        .. important::
-                
-            There must be strictly more students than reviewers per repo
-            (`num_reviews`). Otherwise, allocation is impossible.
+        This can be scaled to however many teams you would like to merge. As a
+        practical example, if teams ``team_a`` and ``team_b`` are to review
+        ``team_c``, then the following
+        :py:class:`~repobee_plug.containers.ReviewAllocation` tuple, here
+        called ``allocation``, should be contained in the returned list.
+
+        .. code-block:: python
+
+            review_team = apimeta.Team(members=team_a.members + team_b.members)
+            allocation = containers.ReviewAllocation(
+                review_team=review_team,
+                reviewed_team=team_c,
+            )
+
+        .. note::
+
+            Respecting the ``num_reviews`` argument is optional: only do it if
+            it makes sense.
 
         Args:
-            master_repo_name: Name of a master repository.
-            students: Students for which to generate peer review allocations.
+            team: A list of student :py:class:`~repobee_plug.apimeta.Team`
+                tuples.
             num_reviews: Amount of reviews each student should perform (and
                 consequently amount of reviewers per repo)
-            review_team_name_function: A function that takes a master repo name
-                as its first argument, and a student username as its second, and
-                returns a review team name.
         Returns:
-            a (peer_review_team -> reviewers) mapping for each student repository.
+            A list of :py:class:`~repobee_plug.containers.ReviewAllocation` tuples.
         """
 
 

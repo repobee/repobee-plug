@@ -88,3 +88,8 @@ class Status(enum.Enum):
     SUCCESS = "success"
     WARNING = "warning"
     ERROR = "error"
+
+
+ReviewAllocation = collections.namedtuple(
+    "ReviewAllocation", "review_team reviewed_team"
+)
