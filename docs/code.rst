@@ -3,38 +3,50 @@
 ``repobee_plug`` Module Reference
 **********************************
 
-API
-===
+Public API
+**********
+The public API of ``repobee_plug`` is what's intended to be used directly in
+plugins.
 
 .. automodule:: repobee_plug
-    :members:
+   :members:
+
+Internal API
+************
+The internal API of ``repobee_plug`` should only be used internally.
+
+apimeta
+=======
+
+.. automodule:: repobee_plug.apimeta
+   :members:
 
 pluginmeta
 ==========
 
 .. automodule:: repobee_plug.pluginmeta
-    :members:
+   :members:
 
 containers
 ==========
 
 .. automodule:: repobee_plug.containers
-    :members:
+   :members:
 
 corehooks
 =========
 
 .. automodule:: repobee_plug.corehooks
-    :members:
+   :members:
 
 exthooks
 ========
 
 .. automodule:: repobee_plug.exthooks
-    :members:
+   :members:
 
 exception
 =========
 
 .. automodule:: repobee_plug.exception
-    :members:
+   :members:
