@@ -11,13 +11,44 @@ import argparse
 import pluggy
 import typing
 
+from typing import Mapping, Any
+
 from repobee_plug import exception
 
 
 hookspec = pluggy.HookspecMarker(__package__)
 hookimpl = pluggy.HookimplMarker(__package__)
 
-HookResult = collections.namedtuple("HookResult", ("hook", "status", "msg"))
+
+class Status(enum.Enum):
+    """Status codes enum."""
+
+    SUCCESS = "success"
+    WARNING = "warning"
+    ERROR = "error"
+
+
+class HookResult(
+    collections.namedtuple("HookResult", ("hook", "status", "msg", "data"))
+):
+    """Container for storing results from hooks."""
+
+    def __new__(
+        cls,
+        hook: str,
+        status: Status,
+        msg: str,
+        data: Mapping[Any, Any] = None,
+    ):
+        """
+        Args:
+            hook: Name of the hook.
+            status: Status of the hook execution.
+            msg: A hook message.
+            data: Any additional data that the hook would like to report. This
+                is primarily for storing hook results as JSON.
+        """
+        return super().__new__(cls, hook, status, msg, data)
 
 
 class ExtensionParser(argparse.ArgumentParser):
@@ -67,7 +98,9 @@ class ExtensionCommand(
                 "parser must be a {.__name__}".format(ExtensionParser)
             )
         if not callable(callback):
-            raise exception.ExtensionCommandError("callback must be a callable")
+            raise exception.ExtensionCommandError(
+                "callback must be a callable"
+            )
         return super().__new__(
             cls, parser, name, help, description, callback, requires_api
         )
@@ -80,14 +113,6 @@ class ExtensionCommand(
         _, *rest = self
         _, *other_rest = other
         return rest == other_rest
-
-
-class Status(enum.Enum):
-    """Status codes enum."""
-
-    SUCCESS = "success"
-    WARNING = "warning"
-    ERROR = "error"
 
 
 ReviewAllocation = collections.namedtuple(
