@@ -50,3 +50,9 @@ exception
 
 .. automodule:: repobee_plug.exception
    :members:
+
+serialize
+=========
+
+.. automodule:: repobee_plug.serialize
+   :members:

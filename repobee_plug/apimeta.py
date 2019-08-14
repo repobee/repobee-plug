@@ -299,7 +299,7 @@ class APISpec:
 
     def get_review_progress(
         self, review_team_names: Iterable[str], teams: Iterable[Team], title_regex: str
-    ) -> Mapping[str, List["tuples.Review"]]:
+    ) -> Mapping[str, List]:
         """Get the peer review progress for the specified review teams and
         student teams by checking which review team members have opened issues
         in their assigned repos. Only issues matching the title regex will be
