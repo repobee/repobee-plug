@@ -28,7 +28,7 @@ def hook_result_mapping():
         hook_results[repo_name].append(
             containers.HookResult(hook=hook_name, status=status, msg=msg, data=data)
         )
-    return dict(hook_results)
+    return {repo_name: sorted(results) for reponame, results in hook_results.items()}
 
 
 def test_serialize_empty_mapping():
@@ -47,5 +47,6 @@ def test_lossless_serialization(hook_result_mapping):
 
     serialized = serialize.result_mapping_to_json(hook_result_mapping)
     deserialized = serialize.json_to_result_mapping(serialized)
+    actual = {repo_name: sorted(results) for repo_name, results in deserialized.items()}
 
-    assert deserialized == expected
+    assert actual == expected
