@@ -11,7 +11,7 @@ with open("repobee_plug/__version.py", mode="r", encoding="utf-8") as f:
     assert re.match(r"^\d+(\.\d+){2}(-(alpha|beta|rc)(\.\d+)?)?$", __version__)
 
 test_requirements = ["pytest>=4.0.0", "pytest-cov", "codecov", "tox"]
-required = ["pluggy>=0.8.0"]
+required = ["pluggy>=0.8.0", "maya>=0.6.1"]
 
 setup(
     name="repobee-plug",

@@ -22,7 +22,10 @@ import inspect
 import enum
 import collections
 import itertools
+import datetime
 from typing import List, Iterable, Optional, Generator, Tuple, Mapping
+
+import maya
 
 from repobee_plug import exception
 
@@ -149,6 +152,25 @@ class Issue(
         return super().__new__(
             cls, title, body, number, created_at, author, implementation
         )
+
+    def to_dict(self):
+        """Return a dictionary representation of this namedtuple, without
+        the ``implementation`` field.
+        """
+        asdict = self._asdict()
+        del asdict["implementation"]
+        asdict["created_at"] = self.created_at.isoformat()
+        return asdict
+
+    @staticmethod
+    def from_dict(asdict: dict) -> "Issue":
+        """Take a dictionary produced by Issue.to_dict and reconstruct the
+        corresponding instance. The ``implementation`` field is lost in a
+        to_dict -> from_dict roundtrip.
+        """
+        asdict_copy = dict(asdict)
+        asdict_copy["created_at"] = maya.parse(asdict_copy["created_at"]).datetime(naive=True)
+        return Issue(**asdict_copy)
 
 
 class APISpec:

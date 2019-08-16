@@ -3,6 +3,7 @@ from repobee_plug import apimeta
 from repobee_plug import exception
 
 import collections
+import datetime
 
 
 def api_methods():
@@ -108,8 +109,7 @@ class TestAPI:
                 return expected
 
         assert (
-            API(None, None, None, None).ensure_teams_and_members(None, None)
-            == expected
+            API(None, None, None, None).ensure_teams_and_members(None, None) == expected
         )
 
 
@@ -120,8 +120,7 @@ class TestAPIObject:
         """
 
         class APIObj(
-            apimeta.APIObject,
-            collections.namedtuple("APIObj", "implementation"),
+            apimeta.APIObject, collections.namedtuple("APIObj", "implementation")
         ):
             def __new__(cls):
                 return super().__new__(cls, implementation=None)
@@ -140,8 +139,7 @@ class TestAPIObject:
         implementation = 42
 
         class APIObj(
-            apimeta.APIObject,
-            collections.namedtuple("APIObj", "implementation"),
+            apimeta.APIObject, collections.namedtuple("APIObj", "implementation")
         ):
             def __new__(cls):
                 return super().__new__(cls, implementation=implementation)
@@ -149,3 +147,24 @@ class TestAPIObject:
         obj = APIObj()
 
         assert obj.implementation == implementation
+
+
+class TestIssue:
+    def test_lossless_to_dict_from_dict_roundtrip(self):
+        """Test that running to_dict and then from_dict on the resulting
+        dict results in the original Issue instance, minus the implementation
+        field (which should always be None in a reconstructed instance).
+        """
+        issue = apimeta.Issue(
+            title="Some title",
+            body="Some body",
+            number=3,
+            created_at=datetime.datetime(2019, 8, 16, 8, 57, 23, 949179),
+            author="slarse",
+            implementation=None,
+        )
+
+        asdict = issue.to_dict()
+        reconstructed = apimeta.Issue.from_dict(asdict)
+
+        assert reconstructed == issue
