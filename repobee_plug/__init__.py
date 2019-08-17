@@ -8,6 +8,7 @@ from repobee_plug.containers import Status
 from repobee_plug.containers import ExtensionParser
 from repobee_plug.containers import ExtensionCommand
 from repobee_plug.containers import ReviewAllocation
+from repobee_plug.containers import BaseParser
 from repobee_plug.corehooks import PeerReviewHook as _peer_hook
 from repobee_plug.corehooks import APIHook as _api_hook
 from repobee_plug.exthooks import CloneHook as _clone_hook
@@ -44,4 +45,5 @@ __all__ = [
     "PlugError",
     "json_to_result_mapping",
     "result_mapping_to_json",
+    "BaseParser",
 ]

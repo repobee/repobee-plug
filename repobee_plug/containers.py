@@ -11,7 +11,7 @@ import argparse
 import pluggy
 import typing
 
-from typing import Mapping, Any
+from typing import Mapping, Any, List, Optional, Callable, Iterable
 
 from repobee_plug import exception
 
@@ -34,11 +34,7 @@ class HookResult(
     """Container for storing results from hooks."""
 
     def __new__(
-        cls,
-        hook: str,
-        status: Status,
-        msg: str,
-        data: Mapping[Any, Any] = None,
+        cls, hook: str, status: Status, msg: str, data: Mapping[Any, Any] = None
     ):
         """
         Args:
@@ -58,10 +54,27 @@ class ExtensionParser(argparse.ArgumentParser):
         super().__init__(add_help=False)
 
 
+class BaseParser(enum.Enum):
+    """Enumeration of base parsers that an extension command can request."""
+
+    BASE = "base"
+    STUDENTS = "students"
+    REPO_NAMES = "repo-names"
+    MASTER_ORG = "master-org"
+
+
 class ExtensionCommand(
     collections.namedtuple(
         "ExtensionCommand",
-        ("parser", "name", "help", "description", "callback", "requires_api"),
+        (
+            "parser",
+            "name",
+            "help",
+            "description",
+            "callback",
+            "requires_api",
+            "requires_base_parsers",
+        ),
     )
 ):
     """Class defining an extension command for the RepoBee CLI."""
@@ -72,8 +85,9 @@ class ExtensionCommand(
         name: str,
         help: str,
         description: str,
-        callback: typing.Callable[[argparse.Namespace, "apimeta.API"], None],
+        callback: Callable[[argparse.Namespace, "apimeta.API"], None],
         requires_api: bool = False,
+        requires_base_parsers: Optional[Iterable[BaseParser]] = None,
     ):
         """
         Args:
@@ -98,11 +112,16 @@ class ExtensionCommand(
                 "parser must be a {.__name__}".format(ExtensionParser)
             )
         if not callable(callback):
-            raise exception.ExtensionCommandError(
-                "callback must be a callable"
-            )
+            raise exception.ExtensionCommandError("callback must be a callable")
         return super().__new__(
-            cls, parser, name, help, description, callback, requires_api
+            cls,
+            parser,
+            name,
+            help,
+            description,
+            callback,
+            requires_api,
+            requires_base_parsers,
         )
 
     def __eq__(self, other):
