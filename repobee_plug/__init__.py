@@ -13,10 +13,29 @@ from repobee_plug.corehooks import PeerReviewHook as _peer_hook
 from repobee_plug.corehooks import APIHook as _api_hook
 from repobee_plug.exthooks import CloneHook as _clone_hook
 from repobee_plug.exthooks import ExtensionCommandHook as _ext_command_hook
-from repobee_plug.serialize import json_to_result_mapping, result_mapping_to_json
+from repobee_plug.serialize import (
+    json_to_result_mapping,
+    result_mapping_to_json,
+)
+from repobee_plug.name import (
+    generate_repo_name,
+    generate_repo_names,
+    generate_review_team_name,
+)
 
-from repobee_plug.apimeta import Team, TeamPermission, Issue, IssueState, Repo, API
-from repobee_plug.exception import ExtensionCommandError, HookNameError, PlugError
+from repobee_plug.apimeta import (
+    Team,
+    TeamPermission,
+    Issue,
+    IssueState,
+    Repo,
+    API,
+)
+from repobee_plug.exception import (
+    ExtensionCommandError,
+    HookNameError,
+    PlugError,
+)
 
 manager = pluggy.PluginManager(__package__)
 manager.add_hookspecs(_clone_hook)
@@ -46,4 +65,7 @@ __all__ = [
     "json_to_result_mapping",
     "result_mapping_to_json",
     "BaseParser",
+    "generate_repo_name",
+    "generate_repo_names",
+    "generate_review_team_name",
 ]

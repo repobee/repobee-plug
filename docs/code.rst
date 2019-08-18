@@ -51,6 +51,12 @@ exception
 .. automodule:: repobee_plug.exception
    :members:
 
+name
+====
+
+.. automodule:: repobee_plug.name
+   :members:
+
 serialize
 =========
 
