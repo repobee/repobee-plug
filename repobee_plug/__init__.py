@@ -2,6 +2,7 @@ import pluggy
 
 from repobee_plug.__version import __version__
 from repobee_plug.pluginmeta import Plugin
+from repobee_plug.containers import Review
 from repobee_plug.containers import hookimpl as repobee_hook
 from repobee_plug.containers import HookResult
 from repobee_plug.containers import Status
@@ -52,6 +53,7 @@ __all__ = [
     "ExtensionParser",
     "ExtensionCommand",
     "ReviewAllocation",
+    "Review",
     "Team",
     "TeamPermission",
     "Issue",
