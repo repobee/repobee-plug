@@ -25,8 +25,6 @@ import itertools
 import datetime
 from typing import List, Iterable, Optional, Generator, Tuple, Mapping
 
-import maya
-
 from repobee_plug import exception
 
 MAX_NAME_LENGTH = 100
@@ -134,7 +132,6 @@ class Issue(
         """
         asdict = self._asdict()
         del asdict["implementation"]
-        asdict["created_at"] = self.created_at.isoformat()
         return asdict
 
     @staticmethod
@@ -143,9 +140,7 @@ class Issue(
         corresponding instance. The ``implementation`` field is lost in a
         to_dict -> from_dict roundtrip.
         """
-        asdict_copy = dict(asdict)
-        asdict_copy["created_at"] = maya.parse(asdict_copy["created_at"]).datetime(naive=True)
-        return Issue(**asdict_copy)
+        return Issue(**asdict)
 
 
 class APISpec:
