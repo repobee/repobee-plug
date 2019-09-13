@@ -159,7 +159,7 @@ class TestIssue:
             title="Some title",
             body="Some body",
             number=3,
-            created_at=datetime.datetime(2019, 8, 16, 8, 57, 23, 949179),
+            created_at=str(datetime.datetime(2019, 8, 16, 8, 57, 23, 949179)),
             author="slarse",
             implementation=None,
         )
