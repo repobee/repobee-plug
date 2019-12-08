@@ -45,6 +45,12 @@ class CloneHook:
     ) -> Optional[HookResult]:
         """Do something with a cloned repo.
 
+        .. important::
+
+            As of v0.12.0, this hook is deprecated and has been replaced by
+            :py:meth:`CloneHook.clone_task`. Once all known, existing plugins
+            have been migrated to the new hook, this hook will be removed.
+
         Args:
             path: Path to the repo.
             api: An instance of :py:class:`repobee.github_api.GitHubAPI`.
