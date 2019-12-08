@@ -10,6 +10,7 @@ from repobee_plug.containers import ExtensionParser
 from repobee_plug.containers import ExtensionCommand
 from repobee_plug.containers import ReviewAllocation
 from repobee_plug.containers import BaseParser
+from repobee_plug.tasks import Task
 from repobee_plug.corehooks import PeerReviewHook as _peer_hook
 from repobee_plug.corehooks import APIHook as _api_hook
 from repobee_plug.exthooks import CloneHook as _clone_hook
@@ -70,4 +71,5 @@ __all__ = [
     "generate_repo_name",
     "generate_repo_names",
     "generate_review_team_name",
+    "Task",
 ]
