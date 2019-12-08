@@ -15,9 +15,11 @@ import argparse
 import configparser
 from typing import Union, Optional
 
+from repobee_plug.apimeta import API
 from repobee_plug.containers import hookspec
 from repobee_plug.containers import HookResult
 from repobee_plug.containers import ExtensionCommand
+from repobee_plug.tasks import Task
 
 
 class CloneHook:
@@ -65,6 +67,30 @@ class CloneHook:
         
         Args:
             config: the config parser after config has been read.
+        """
+
+
+class SetupHook:
+    """Hook functions related to setting up student repos."""
+
+    @hookspec
+    def setup_task(self) -> Task:
+        """Create a task to run on a copy of the master repo before it is
+        pushed out to student repositories. This can for example be pre-flight
+        checks of the master repo, or something else entirely.
+
+        Implementations of this hook should return a :py:class:~Task:, which
+        defines a callback that is called after the master repo has been safely
+        copied, but before that copy is pushed out to student repositories.
+        Note that any changes to the repository must be committed to actually
+        show up in the student repositories.
+
+        .. note::
+
+            Structural changes to the master repo are not currently supported.
+            Changes to the repository during the callback will not be reflected
+            in the generated repositories. Support for preprocessing (such that
+            changes do take effect) is a potential future feature.
         """
 
 
