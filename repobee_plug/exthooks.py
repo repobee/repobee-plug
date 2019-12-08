@@ -26,6 +26,20 @@ class CloneHook:
     """Hook functions related to cloning repos."""
 
     @hookspec
+    def clone_task(self) -> Task:
+        """Create a task to run on a copy of a cloned student repo. This hook
+        replaces the old ``act_on_cloned_repo`` hook, which will be removed in
+        RepoBee v3.0.0.
+
+        Implementations of this hook should return a :py:class:`~Task`, which
+        defines a callback that is called after all student repos have been
+        cloned. See the definition of :py:class:`~Task` for details.
+
+        Returns:
+            A :py:class:`~Task` instance defining a RepoBee task.
+        """
+
+    @hookspec
     def act_on_cloned_repo(
         self, path: Union[str, pathlib.Path], api
     ) -> Optional[HookResult]:
@@ -79,7 +93,7 @@ class SetupHook:
         pushed out to student repositories. This can for example be pre-flight
         checks of the master repo, or something else entirely.
 
-        Implementations of this hook should return a :py:class:~Task:, which
+        Implementations of this hook should return a :py:class:`~Task`, which
         defines a callback that is called after the master repo has been safely
         copied, but before that copy is pushed out to student repositories.
         Note that any changes to the repository must be committed to actually
