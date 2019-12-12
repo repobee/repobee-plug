@@ -62,3 +62,9 @@ serialize
 
 .. automodule:: repobee_plug.serialize
    :members:
+
+task
+====
+
+.. automodule:: repobee_plug.tasks
+   :members:

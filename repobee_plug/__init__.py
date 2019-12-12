@@ -14,6 +14,7 @@ from repobee_plug.tasks import Task
 from repobee_plug.corehooks import PeerReviewHook as _peer_hook
 from repobee_plug.corehooks import APIHook as _api_hook
 from repobee_plug.exthooks import CloneHook as _clone_hook
+from repobee_plug.exthooks import TaskHooks as _task_hooks
 from repobee_plug.exthooks import ExtensionCommandHook as _ext_command_hook
 from repobee_plug.serialize import (
     json_to_result_mapping,
@@ -44,6 +45,7 @@ manager.add_hookspecs(_clone_hook)
 manager.add_hookspecs(_peer_hook)
 manager.add_hookspecs(_api_hook)
 manager.add_hookspecs(_ext_command_hook)
+manager.add_hookspecs(_task_hooks)
 
 __all__ = [
     "Plugin",

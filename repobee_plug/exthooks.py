@@ -22,8 +22,8 @@ from repobee_plug.containers import ExtensionCommand
 from repobee_plug.tasks import Task
 
 
-class CloneHook:
-    """Hook functions related to cloning repos."""
+class TaskHooks:
+    """Hook functions relating to RepoBee tasks."""
 
     @hookspec
     def clone_task(self) -> Task:
@@ -40,6 +40,30 @@ class CloneHook:
         """
 
     @hookspec
+    def setup_task(self) -> Task:
+        """Create a task to run on a copy of the master repo before it is
+        pushed out to student repositories. This can for example be pre-flight
+        checks of the master repo, or something else entirely.
+
+        Implementations of this hook should return a :py:class:`~Task`, which
+        defines a callback that is called after the master repo has been safely
+        copied, but before that copy is pushed out to student repositories.
+        Note that any changes to the repository must be committed to actually
+        show up in the student repositories.
+
+        .. note::
+
+            Structural changes to the master repo are not currently supported.
+            Changes to the repository during the callback will not be reflected
+            in the generated repositories. Support for preprocessing (such that
+            changes do take effect) is a potential future feature.
+        """
+
+
+class CloneHook:
+    """Hook functions related to cloning repos."""
+
+    @hookspec
     def act_on_cloned_repo(
         self, path: Union[str, pathlib.Path], api
     ) -> Optional[HookResult]:
@@ -48,7 +72,7 @@ class CloneHook:
         .. important::
 
             As of v0.12.0, this hook is deprecated and has been replaced by
-            :py:meth:`CloneHook.clone_task`. Once all known, existing plugins
+            :py:meth:`TaskHooks.clone_task`. Once all known, existing plugins
             have been migrated to the new hook, this hook will be removed.
 
         Args:
@@ -65,6 +89,12 @@ class CloneHook:
     def clone_parser_hook(self, clone_parser: argparse.ArgumentParser) -> None:
         """Do something with the clone repos subparser before it is used used to
         parse CLI options. The typical task is to add options to it.
+
+        .. important::
+
+            As of v0.12.0, this hook is deprecated and has been replaced by
+            :py:meth:`~TaskHooks.clone_task`. Once all known, existing plugins
+            have been migrated to the new hook, this hook will be removed.
 
         Args:
             clone_parser: The ``clone`` subparser.
@@ -87,30 +117,6 @@ class CloneHook:
         
         Args:
             config: the config parser after config has been read.
-        """
-
-
-class SetupHook:
-    """Hook functions related to setting up student repos."""
-
-    @hookspec
-    def setup_task(self) -> Task:
-        """Create a task to run on a copy of the master repo before it is
-        pushed out to student repositories. This can for example be pre-flight
-        checks of the master repo, or something else entirely.
-
-        Implementations of this hook should return a :py:class:`~Task`, which
-        defines a callback that is called after the master repo has been safely
-        copied, but before that copy is pushed out to student repositories.
-        Note that any changes to the repository must be committed to actually
-        show up in the student repositories.
-
-        .. note::
-
-            Structural changes to the master repo are not currently supported.
-            Changes to the repository during the callback will not be reflected
-            in the generated repositories. Support for preprocessing (such that
-            changes do take effect) is a potential future feature.
         """
 
 
@@ -138,7 +144,9 @@ class ExtensionCommandHook:
 
         .. code-block:: python
 
-            def callback(args: argparse.Namespace, api: apimeta.API) -> None:
+            import repobee_plug as plug
+
+            def callback(args: argparse.Namespace, api: plug.API) -> None:
                 LOGGER.info("callback called with: {}, {}".format(args, api))
 
             @plug.repobee_hook

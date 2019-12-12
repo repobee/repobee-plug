@@ -12,7 +12,7 @@ _HOOK_METHODS = {
         *corehooks.PeerReviewHook.__dict__.items(),
         *corehooks.APIHook.__dict__.items(),
         *exthooks.ExtensionCommandHook.__dict__.items(),
-        *exthooks.SetupHook.__dict__.items(),
+        *exthooks.TaskHooks.__dict__.items(),
     ]
     if callable(value) and not key.startswith("_")
 }
