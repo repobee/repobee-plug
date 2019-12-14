@@ -10,6 +10,7 @@ from repobee_plug.containers import ExtensionParser
 from repobee_plug.containers import ExtensionCommand
 from repobee_plug.containers import ReviewAllocation
 from repobee_plug.containers import BaseParser
+from repobee_plug.containers import Deprecation
 from repobee_plug.tasks import Task
 from repobee_plug.corehooks import PeerReviewHook as _peer_hook
 from repobee_plug.corehooks import APIHook as _api_hook
@@ -74,4 +75,12 @@ __all__ = [
     "generate_repo_names",
     "generate_review_team_name",
     "Task",
+    "Deprecation",
 ]
+
+# NOTE: The remove_by versions here refer to the RepoBee application,
+# not the plugin system.
+_clone_task_depr = Deprecation(replacement="clone_task", remove_by="v3.0.0")
+DEPRECATED_HOOKS = dict(
+    act_on_cloned_repo=_clone_task_depr, clone_parser_hook=_clone_task_depr,
+)

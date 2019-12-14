@@ -145,3 +145,5 @@ ReviewAllocation = collections.namedtuple(
 )
 
 Review = collections.namedtuple("Review", ["repo", "done"])
+
+Deprecation = collections.namedtuple("Deprecation", ["replacement", "remove_by"])
