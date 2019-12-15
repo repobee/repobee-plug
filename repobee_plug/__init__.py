@@ -17,6 +17,7 @@ from repobee_plug.corehooks import APIHook as _api_hook
 from repobee_plug.exthooks import CloneHook as _clone_hook
 from repobee_plug.exthooks import TaskHooks as _task_hooks
 from repobee_plug.exthooks import ExtensionCommandHook as _ext_command_hook
+from repobee_plug._deprecation import deprecate, deprecated_hooks
 from repobee_plug.serialize import (
     json_to_result_mapping,
     result_mapping_to_json,
@@ -76,11 +77,6 @@ __all__ = [
     "generate_review_team_name",
     "Task",
     "Deprecation",
+    "deprecate",
+    "deprecated_hooks",
 ]
-
-# NOTE: The remove_by versions here refer to the RepoBee application,
-# not the plugin system.
-_clone_task_depr = Deprecation(replacement="clone_task", remove_by="v3.0.0")
-DEPRECATED_HOOKS = dict(
-    act_on_cloned_repo=_clone_task_depr, clone_parser_hook=_clone_task_depr,
-)

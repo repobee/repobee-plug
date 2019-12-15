@@ -34,11 +34,7 @@ class HookResult(
     """Container for storing results from hooks."""
 
     def __new__(
-        cls,
-        hook: str,
-        status: Status,
-        msg: str,
-        data: Mapping[Any, Any] = None,
+        cls, hook: str, status: Status, msg: str, data: Mapping[Any, Any] = None,
     ):
         """
         Args:
@@ -116,9 +112,7 @@ class ExtensionCommand(
                 "parser must be a {.__name__}".format(ExtensionParser)
             )
         if not callable(callback):
-            raise exception.ExtensionCommandError(
-                "callback must be a callable"
-            )
+            raise exception.ExtensionCommandError("callback must be a callable")
         return super().__new__(
             cls,
             parser,
@@ -146,4 +140,6 @@ ReviewAllocation = collections.namedtuple(
 
 Review = collections.namedtuple("Review", ["repo", "done"])
 
-Deprecation = collections.namedtuple("Deprecation", ["replacement", "remove_by"])
+Deprecation = collections.namedtuple(
+    "Deprecation", ["replacement", "remove_by_version"]
+)

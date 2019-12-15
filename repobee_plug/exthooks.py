@@ -19,6 +19,7 @@ from repobee_plug.apimeta import API
 from repobee_plug.containers import hookspec
 from repobee_plug.containers import HookResult
 from repobee_plug.containers import ExtensionCommand
+from repobee_plug._deprecation import deprecate
 from repobee_plug.tasks import Task
 
 
@@ -28,8 +29,7 @@ class TaskHooks:
     @hookspec
     def clone_task(self) -> Task:
         """Create a task to run on a copy of a cloned student repo. This hook
-        replaces the old ``act_on_cloned_repo`` hook, which will be removed in
-        RepoBee v3.0.0.
+        replaces the old ``act_on_cloned_repo`` hook.
 
         Implementations of this hook should return a :py:class:`~Task`, which
         defines a callback that is called after all student repos have been
@@ -63,6 +63,7 @@ class TaskHooks:
 class CloneHook:
     """Hook functions related to cloning repos."""
 
+    @deprecate(remove_by_version="3.0.0", replacement="clone_task")
     @hookspec
     def act_on_cloned_repo(
         self, path: Union[str, pathlib.Path], api
@@ -85,6 +86,7 @@ class CloneHook:
             reporting will be performed for the hook.
         """
 
+    @deprecate(remove_by_version="3.0.0", replacement="clone_task")
     @hookspec
     def clone_parser_hook(self, clone_parser: argparse.ArgumentParser) -> None:
         """Do something with the clone repos subparser before it is used used to
