@@ -8,14 +8,14 @@ and drop it into the ``repobee.ext`` sub-package (i.e. the in directory
 
 There are two ways to implement hooks: as standalone functions or wrapped in a
 class. In the following two sections, we'll implement the
-:py:func:`~repobee_plug.exthooks.CloneHook.act_on_cloned_repo` extension hook
+:py:func:`~repobee_plug._exthooks.CloneHook.act_on_cloned_repo` extension hook
 using both techniques. Let's call the plugin ``exampleplug`` and make sure it
 adheres to the plugin conventions.
 
 Hook functions in a plugin class
 ================================
 Wrapping hook implementations in a class inheriting from
-:py:class:`~repobee_plug.pluginmeta.Plugin` is the recommended way to write
+:py:class:`~repobee_plug._pluginmeta.Plugin` is the recommended way to write
 plugins for RepoBee. The class does some checks to make sure that all
 public functions have hook function names, which comes in handy if you are
 in the habit of misspelling stuff (aren't we all?). Doing it this way,
@@ -54,13 +54,13 @@ Dropping ``exampleplug.py`` into the ``repobee.ext`` package and running
 not-so-interesting output from the plugin.
 
 The name of the class really doesn't matter, it just needs to inherit from
-:py:class:`~repobee_plug.pluginmeta.Plugin`. The name of the module and hook
+:py:class:`~repobee_plug._pluginmeta.Plugin`. The name of the module and hook
 functions matter, though. The name of the module must be the plugin name, and
 the hook functions must have the precise names of the hooks they implement. In
 fact, all public methods in a class deriving from
-:py:class:`~repobee_plug.pluginmeta.Plugin` must have names of hook functions,
+:py:class:`~repobee_plug._pluginmeta.Plugin` must have names of hook functions,
 or the class will fail to be created. You can see that the hook returns a
-:py:class:`~repobee_plug.util.HookResult`. This is used for reporting the
+:py:class:`~repobee_plug._util.HookResult`. This is used for reporting the
 results in RepoBee, and is entirely optional (not all hooks support it,
 though). Do note that if ``None`` is returned instead, RepoBee will not
 report anything for the hook. It is recommended that hooks that can return
@@ -70,9 +70,9 @@ implemented with a class, see the built-in `javac plugin`_.
 Standalone hook functions
 =========================
 Using standalone hook functions is recommended only if you don't want the
-safety net provided by the :py:class:`~repobee_plug.pluginmeta.Plugin`
+safety net provided by the :py:class:`~repobee_plug._pluginmeta.Plugin`
 metaclass. It is fairly straightforward: simply mark a function with the
-:py:const:`repobee_plug.repobee_hook` decorator. With this approach,
+:py:const:`repobee_plug._repobee_hook` decorator. With this approach,
 ``exampleplug.py`` would look like this:
 
 .. code-block:: python

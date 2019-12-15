@@ -1,8 +1,8 @@
 import pytest
 import collections
 
-from repobee_plug import containers
-from repobee_plug import serialize
+from repobee_plug import _containers
+from repobee_plug import _serialize
 
 
 @pytest.fixture
@@ -12,31 +12,31 @@ def hook_result_mapping():
         (
             "slarse-task-1",
             "junit4",
-            containers.Status.SUCCESS,
+            _containers.Status.SUCCESS,
             "All tests passed",
             {"extra": "data", "arbitrary": {"nesting": "here"}},
         ),
-        ("slarse-task-1", "javac", containers.Status.ERROR, "Some stuff failed", None),
+        ("slarse-task-1", "javac", _containers.Status.ERROR, "Some stuff failed", None),
         (
             "glassey-task-2",
             "pylint",
-            containers.Status.WARNING,
+            _containers.Status.WARNING,
             "-10/10 code quality",
             None,
         ),
     ]:
         hook_results[repo_name].append(
-            containers.HookResult(hook=hook_name, status=status, msg=msg, data=data)
+            _containers.HookResult(hook=hook_name, status=status, msg=msg, data=data)
         )
     return {repo_name: sorted(results) for reponame, results in hook_results.items()}
 
 
 def test_serialize_empty_mapping():
-    assert serialize.result_mapping_to_json({}) == "{}"
+    assert _serialize.result_mapping_to_json({}) == "{}"
 
 
 def test_desezialize_empty_json():
-    assert serialize.json_to_result_mapping("{}") == {}
+    assert _serialize.json_to_result_mapping("{}") == {}
 
 
 def test_lossless_serialization(hook_result_mapping):
@@ -45,8 +45,8 @@ def test_lossless_serialization(hook_result_mapping):
     """
     expected = dict(hook_result_mapping)
 
-    serialized = serialize.result_mapping_to_json(hook_result_mapping)
-    deserialized = serialize.json_to_result_mapping(serialized)
+    serialized = _serialize.result_mapping_to_json(hook_result_mapping)
+    deserialized = _serialize.json_to_result_mapping(serialized)
     actual = {repo_name: sorted(results) for repo_name, results in deserialized.items()}
 
     assert actual == expected

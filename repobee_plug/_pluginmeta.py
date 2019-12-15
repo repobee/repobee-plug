@@ -1,18 +1,18 @@
 from typing import Dict, List
 
-from repobee_plug import exception
-from repobee_plug import corehooks
-from repobee_plug import exthooks
-from repobee_plug import containers
+from repobee_plug import _exceptions
+from repobee_plug import _corehooks
+from repobee_plug import _exthooks
+from repobee_plug import _containers
 
 _HOOK_METHODS = {
     key: value
     for key, value in [
-        *exthooks.CloneHook.__dict__.items(),
-        *corehooks.PeerReviewHook.__dict__.items(),
-        *corehooks.APIHook.__dict__.items(),
-        *exthooks.ExtensionCommandHook.__dict__.items(),
-        *exthooks.TaskHooks.__dict__.items(),
+        *_exthooks.CloneHook.__dict__.items(),
+        *_corehooks.PeerReviewHook.__dict__.items(),
+        *_corehooks.APIHook.__dict__.items(),
+        *_exthooks.ExtensionCommandHook.__dict__.items(),
+        *_exthooks.TaskHooks.__dict__.items(),
     ]
     if callable(value) and not key.startswith("_")
 }
@@ -39,7 +39,7 @@ class _PluginMeta(type):
         methods = cls._extract_public_methods(attrdict)
         cls._check_names(methods)
         hooked_methods = {
-            name: containers.hookimpl(method) for name, method in methods.items()
+            name: _containers.hookimpl(method) for name, method in methods.items()
         }
         attrdict.update(hooked_methods)
 
@@ -50,7 +50,7 @@ class _PluginMeta(type):
         hook_names = set(_HOOK_METHODS.keys())
         method_names = set(methods.keys())
         if not method_names.issubset(hook_names):
-            raise exception.HookNameError(
+            raise _exceptions.HookNameError(
                 "public method(s) with non-hook name: {}".format(
                     ", ".join(method_names - hook_names)
                 )

@@ -13,7 +13,7 @@ import typing
 
 from typing import Mapping, Any, List, Optional, Callable, Iterable
 
-from repobee_plug import exception
+from repobee_plug import _exceptions
 
 
 hookspec = pluggy.HookspecMarker(__package__)
@@ -108,11 +108,11 @@ class ExtensionCommand(
                 place of the API.
         """
         if not isinstance(parser, ExtensionParser):
-            raise exception.ExtensionCommandError(
+            raise _exceptions.ExtensionCommandError(
                 "parser must be a {.__name__}".format(ExtensionParser)
             )
         if not callable(callback):
-            raise exception.ExtensionCommandError("callback must be a callable")
+            raise _exceptions.ExtensionCommandError("callback must be a callable")
         return super().__new__(
             cls,
             parser,

@@ -15,12 +15,12 @@ import argparse
 import configparser
 from typing import Union, Optional
 
-from repobee_plug.apimeta import API
-from repobee_plug.containers import hookspec
-from repobee_plug.containers import HookResult
-from repobee_plug.containers import ExtensionCommand
+from repobee_plug._apimeta import API
+from repobee_plug._containers import hookspec
+from repobee_plug._containers import HookResult
+from repobee_plug._containers import ExtensionCommand
 from repobee_plug._deprecation import deprecate
-from repobee_plug.tasks import Task
+from repobee_plug._tasks import Task
 
 
 class TaskHooks:

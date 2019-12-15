@@ -31,7 +31,7 @@ default implementation in :py:mod:`repobee.ext.defaults`. Providing a
 different plugin implementation will override this behavior, thereby
 changing some core part of RepoBee. In general, only one implementation
 of a core hook will run per invocation of RepoBee. All core hooks are
-defined in :py:mod:`repobee_plug.corehooks`.
+defined in :py:mod:`repobee_plug._corehooks`.
 
 .. important::
 
@@ -44,7 +44,7 @@ Extension hooks
 Extension hooks extend the functionality of RepoBee in various ways.
 Unlike the core hooks, there are no default implementations of the extension
 hooks, and multiple implementations can be run on each invocation of
-RepoBee. All extension hooks are defined in :py:mod:`repobee_plug.exthooks`.
+RepoBee. All extension hooks are defined in :py:mod:`repobee_plug._exthooks`.
 
 .. _repobee built-ins: https://repobee.readthedocs.io/en/stable/plugins.html#built-in-plugins
 .. _repobee-junit4: https://github.com/repobee/repobee-junit4

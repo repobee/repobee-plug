@@ -6,8 +6,8 @@
 .. moduleauthor:: Simon Larsén
 """
 from typing import Optional, Mapping, Callable, Any, TypeVar
-from repobee_plug import containers
-from repobee_plug import exception
+from repobee_plug import _containers
+from repobee_plug import _exceptions
 
 AnyFunction = Callable[..., Any]
 
@@ -28,13 +28,13 @@ def deprecate(
         A function 
 
     """
-    dep = containers.Deprecation(
+    dep = _containers.Deprecation(
         replacement=replacement, remove_by_version=remove_by_version
     )
 
     def _inner(func):
         if "repobee_plug_spec" not in dir(func):
-            raise exception.PlugError("can't deprecate non-hook function", func=func)
+            raise _exceptions.PlugError("can't deprecate non-hook function", func=func)
         deprs = _Deprecations()
         deprs.deprecate_hook(func.__name__, dep)
         return func
@@ -42,7 +42,7 @@ def deprecate(
     return _inner
 
 
-def deprecated_hooks() -> Mapping[str, containers.Deprecation]:
+def deprecated_hooks() -> Mapping[str, _containers.Deprecation]:
     """
     Returns:
         A mapping of hook names to :py:class:`~containers.Deprecation` tuples.
@@ -67,7 +67,7 @@ class _Deprecations:
         return cls._instance
 
     def deprecate_hook(
-        self, hook_name: str, deprecation: containers.Deprecation
+        self, hook_name: str, deprecation: _containers.Deprecation
     ) -> None:
         """Deprecate a hook function with the given name.
 

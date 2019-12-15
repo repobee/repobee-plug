@@ -9,9 +9,9 @@ import pathlib
 import collections
 from typing import Callable, Optional
 
-from repobee_plug import exception
-from repobee_plug import apimeta
-from repobee_plug import containers
+from repobee_plug import _exceptions
+from repobee_plug import _apimeta
+from repobee_plug import _containers
 
 
 class Task(

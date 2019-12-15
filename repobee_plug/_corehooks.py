@@ -13,9 +13,9 @@ to allow for this dynamic override.
 
 from typing import Union, Optional, Iterable, List, Mapping, Callable, Tuple
 
-from repobee_plug import apimeta
-from repobee_plug import containers
-from repobee_plug.containers import hookspec
+from repobee_plug import _apimeta
+from repobee_plug import _containers
+from repobee_plug._containers import hookspec
 
 
 class PeerReviewHook:
@@ -23,8 +23,8 @@ class PeerReviewHook:
 
     @hookspec(firstresult=True)
     def generate_review_allocations(
-        self, teams: List[apimeta.Team], num_reviews: int
-    ) -> List[containers.ReviewAllocation]:
+        self, teams: List[_apimeta.Team], num_reviews: int
+    ) -> List[_containers.ReviewAllocation]:
         """Generate :py:class:`~repobee_plug.containers.ReviewAllocation`
         tuples from the provided teams, given that this concerns reviews for a
         single master repo.

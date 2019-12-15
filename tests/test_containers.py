@@ -1,15 +1,15 @@
 import argparse
 import pytest
-from repobee_plug import containers
-from repobee_plug import exception
+from repobee_plug import _containers
+from repobee_plug import _exceptions
 
 
 class TestExtensionCommand:
     def test_raises_if_parser_is_not_a_ExtensionParser(self):
         parser = argparse.ArgumentParser()
 
-        with pytest.raises(exception.ExtensionCommandError) as exc_info:
-            containers.ExtensionCommand(
+        with pytest.raises(_exceptions.ExtensionCommandError) as exc_info:
+            _containers.ExtensionCommand(
                 parser, "test-command", "help", "description", lambda args, api: None
             )
 
@@ -18,9 +18,9 @@ class TestExtensionCommand:
     def test_raises_if_callback_is_not_callable(self):
         callback = 2
 
-        with pytest.raises(exception.ExtensionCommandError) as exc_info:
-            containers.ExtensionCommand(
-                containers.ExtensionParser(),
+        with pytest.raises(_exceptions.ExtensionCommandError) as exc_info:
+            _containers.ExtensionCommand(
+                _containers.ExtensionParser(),
                 "test-command",
                 "help",
                 "description",
@@ -28,8 +28,8 @@ class TestExtensionCommand:
             )
 
     def test_requires_api_false_by_default(self):
-        exc_command = containers.ExtensionCommand(
-            containers.ExtensionParser(),
+        exc_command = _containers.ExtensionCommand(
+            _containers.ExtensionParser(),
             "test-command",
             "help",
             "description",
@@ -43,8 +43,8 @@ class TestExtensionCommand:
         parser are the same. The reason for this is that
         argparse.ArgumentParser instances don't compare equal even if they are.
         """
-        lhs_parser = containers.ExtensionParser()
-        rhs_parser = containers.ExtensionParser()
+        lhs_parser = _containers.ExtensionParser()
+        rhs_parser = _containers.ExtensionParser()
         assert lhs_parser != rhs_parser, "parsers should be unequal"
         command_name = "test-command"
         help = "help"
@@ -53,10 +53,10 @@ class TestExtensionCommand:
         def callback(args, api):
             return None
 
-        lhs = containers.ExtensionCommand(
+        lhs = _containers.ExtensionCommand(
             lhs_parser, command_name, help, description, callback
         )
-        rhs = containers.ExtensionCommand(
+        rhs = _containers.ExtensionCommand(
             lhs_parser, command_name, help, description, callback
         )
 

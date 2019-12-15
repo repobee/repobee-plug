@@ -1,14 +1,14 @@
 import pytest
 import pluggy
-from repobee_plug import pluginmeta
-from repobee_plug import exception
+from repobee_plug import _pluginmeta
+from repobee_plug import _exceptions
 
 
 class TestPluginInheritance:
     def test_raises_on_non_hook_public_method(self):
-        with pytest.raises(exception.HookNameError) as exc_info:
+        with pytest.raises(_exceptions.HookNameError) as exc_info:
 
-            class Derived(pluginmeta.Plugin):
+            class Derived(_pluginmeta.Plugin):
                 """Has the hook method config_hook and a non-hook method called
                 some_method."""
 
@@ -27,7 +27,7 @@ class TestPluginInheritance:
         hook names.
         """
 
-        class Derived(pluginmeta.Plugin):
+        class Derived(_pluginmeta.Plugin):
             """Has all hook methods defined."""
 
             def act_on_cloned_repo(self, path):
@@ -59,7 +59,7 @@ class TestPluginInheritance:
     def test_with_private_methods(self):
         """Private methods should be able to have any names."""
 
-        class Derived(pluginmeta.Plugin):
+        class Derived(_pluginmeta.Plugin):
             """Has all hook methods defined."""
 
             def act_on_cloned_repo(self, path):

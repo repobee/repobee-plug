@@ -22,10 +22,9 @@ import inspect
 import enum
 import collections
 import itertools
-import datetime
 from typing import List, Iterable, Optional, Generator, Tuple, Mapping
 
-from repobee_plug import exception
+from repobee_plug import _exceptions
 
 MAX_NAME_LENGTH = 100
 
@@ -391,7 +390,7 @@ def check_init_params(reference_params, compare_params):
     """
     extra = set(compare_params) - set(reference_params)
     if extra:
-        raise exception.APIImplementationError(
+        raise _exceptions.APIImplementationError(
             "unexpected arguments to __init__: {}".format(extra)
         )
 
@@ -411,7 +410,7 @@ def check_parameters(reference, compare):
 
     for ref, cmp in itertools.zip_longest(reference_params, compare_params):
         if ref != cmp:
-            raise exception.APIImplementationError(
+            raise _exceptions.APIImplementationError(
                 "{}: expected parameter '{}', found '{}'".format(
                     reference.__name__, ref, cmp
                 )
@@ -428,7 +427,7 @@ class APIMeta(type):
         implemented_methods = methods(attrdict)
         non_api_methods = set(implemented_methods.keys()) - set(api_methods.keys())
         if non_api_methods:
-            raise exception.APIImplementationError(
+            raise _exceptions.APIImplementationError(
                 "non-API methods may not be public: {}".format(non_api_methods)
             )
         for method_name, method in api_methods.items():

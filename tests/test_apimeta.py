@@ -1,19 +1,19 @@
 import pytest
-from repobee_plug import apimeta
-from repobee_plug import exception
+from repobee_plug import _apimeta
+from repobee_plug import _exceptions
 
 import collections
 import datetime
 
 
 def api_methods():
-    methods = apimeta.methods(apimeta.APISpec.__dict__)
+    methods = _apimeta.methods(_apimeta.APISpec.__dict__)
     assert methods, "there must be api methods"
     return methods.items()
 
 
 def api_method_ids():
-    methods = apimeta.methods(apimeta.APISpec.__dict__)
+    methods = _apimeta.methods(_apimeta.APISpec.__dict__)
     return list(methods.keys())
 
 
@@ -24,11 +24,11 @@ class TestAPI:
         left undefined.
         """
 
-        class API(apimeta.API):
+        class API(_apimeta.API):
             pass
 
         name, impl = method
-        params = apimeta.parameters(impl)
+        params = _apimeta.parameters(impl)
 
         with pytest.raises(NotImplementedError):
             m = getattr(API, name)
@@ -40,9 +40,9 @@ class TestAPI:
         different argument should raise.
         """
 
-        with pytest.raises(exception.APIImplementationError):
+        with pytest.raises(_exceptions.APIImplementationError):
 
-            class API(apimeta.API):
+            class API(_apimeta.API):
                 def get_teams(a):
                     pass
 
@@ -51,21 +51,21 @@ class TestAPI:
         args in APISpec.__init__.
         """
 
-        class API(apimeta.API):
+        class API(_apimeta.API):
             def __init__(self, base_url):
                 pass
 
         api = API("some-url")
-        assert isinstance(api, apimeta.API)
+        assert isinstance(api, _apimeta.API)
 
     def test_raises_when_init_has_superset_of_args(self):
         """Test that ``__init__`` cannot be defined with a superset of the args
         in APISpec.__init__.
         """
 
-        with pytest.raises(exception.APIImplementationError) as exc_info:
+        with pytest.raises(_exceptions.APIImplementationError) as exc_info:
 
-            class API(apimeta.API):
+            class API(_apimeta.API):
                 def __init__(self, base_url, token, org_name, user, other):
                     pass
 
@@ -77,7 +77,7 @@ class TestAPI:
         """
         expected = 42
 
-        class API(apimeta.API):
+        class API(_apimeta.API):
             def __init__(self, base_url, token, org_name, user):
                 pass
 
@@ -87,9 +87,9 @@ class TestAPI:
         assert API(None, None, None, None).get_teams() == expected
 
     def test_raises_when_method_has_incorrect_default_arg(self):
-        with pytest.raises(exception.APIImplementationError):
+        with pytest.raises(_exceptions.APIImplementationError):
 
-            class API(apimeta.API):
+            class API(_apimeta.API):
                 def __init__(self, base_url, token, org_name, user):
                     pass
 
@@ -99,12 +99,12 @@ class TestAPI:
     def test_accepts_correct_default_arg(self):
         expected = 42
 
-        class API(apimeta.API):
+        class API(_apimeta.API):
             def __init__(self, base_url, token, org_name, user):
                 pass
 
             def ensure_teams_and_members(
-                self, teams, permission=apimeta.TeamPermission.PUSH
+                self, teams, permission=_apimeta.TeamPermission.PUSH
             ):
                 return expected
 
@@ -120,7 +120,7 @@ class TestAPIObject:
         """
 
         class APIObj(
-            apimeta.APIObject, collections.namedtuple("APIObj", "implementation")
+            _apimeta.APIObject, collections.namedtuple("APIObj", "implementation")
         ):
             def __new__(cls):
                 return super().__new__(cls, implementation=None)
@@ -139,7 +139,7 @@ class TestAPIObject:
         implementation = 42
 
         class APIObj(
-            apimeta.APIObject, collections.namedtuple("APIObj", "implementation")
+            _apimeta.APIObject, collections.namedtuple("APIObj", "implementation")
         ):
             def __new__(cls):
                 return super().__new__(cls, implementation=implementation)
@@ -155,7 +155,7 @@ class TestIssue:
         dict results in the original Issue instance, minus the implementation
         field (which should always be None in a reconstructed instance).
         """
-        issue = apimeta.Issue(
+        issue = _apimeta.Issue(
             title="Some title",
             body="Some body",
             number=3,
@@ -165,6 +165,6 @@ class TestIssue:
         )
 
         asdict = issue.to_dict()
-        reconstructed = apimeta.Issue.from_dict(asdict)
+        reconstructed = _apimeta.Issue.from_dict(asdict)
 
         assert reconstructed == issue

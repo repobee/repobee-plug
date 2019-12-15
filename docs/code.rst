@@ -15,56 +15,62 @@ Internal API
 ************
 The internal API of ``repobee_plug`` should only be used internally.
 
-apimeta
-=======
-
-.. automodule:: repobee_plug.apimeta
-   :members:
-
-pluginmeta
-==========
-
-.. automodule:: repobee_plug.pluginmeta
-   :members:
-
-containers
-==========
-
-.. automodule:: repobee_plug.containers
-   :members:
-
-corehooks
-=========
-
-.. automodule:: repobee_plug.corehooks
-   :members:
-
-exthooks
+_apimeta
 ========
 
-.. automodule:: repobee_plug.exthooks
+.. automodule:: repobee_plug._apimeta
    :members:
 
-exception
+_pluginmeta
+===========
+
+.. automodule:: repobee_plug._pluginmeta
+   :members:
+
+_containers
+===========
+
+.. automodule:: repobee_plug._containers
+   :members:
+
+_corehooks
+==========
+
+.. automodule:: repobee_plug._corehooks
+   :members:
+
+_exthooks
 =========
 
-.. automodule:: repobee_plug.exception
+.. automodule:: repobee_plug._exthooks
    :members:
 
-name
-====
+_exceptions
+===========
 
-.. automodule:: repobee_plug.name
+.. automodule:: repobee_plug._exceptions
    :members:
 
-serialize
-=========
+_name
+=====
 
-.. automodule:: repobee_plug.serialize
+.. automodule:: repobee_plug._name
    :members:
 
-task
-====
+_serialize
+==========
 
-.. automodule:: repobee_plug.tasks
+.. automodule:: repobee_plug._serialize
+   :members:
+
+_tasks
+======
+
+.. automodule:: repobee_plug._tasks
+   :members:
+
+_deprecation
+============
+
+.. automodule:: repobee_plug._deprecation
    :members:
