@@ -35,6 +35,7 @@ from repobee_plug._apimeta import (
     IssueState,
     Repo,
     API,
+    APISpec,
 )
 from repobee_plug._exceptions import (
     ExtensionCommandError,
@@ -66,6 +67,7 @@ __all__ = [
     "Issue",
     "IssueState",
     "API",
+    "APISpec",
     "ExtensionCommandError",
     "HookNameError",
     "PlugError",
