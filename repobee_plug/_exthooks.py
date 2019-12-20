@@ -66,7 +66,7 @@ class CloneHook:
     @deprecate(remove_by_version="3.0.0", replacement="clone_task")
     @hookspec
     def act_on_cloned_repo(
-        self, path: Union[str, pathlib.Path], api
+        self, path: Union[str, pathlib.Path], api: API
     ) -> Optional[HookResult]:
         """Do something with a cloned repo.
 
@@ -116,7 +116,7 @@ class CloneHook:
     @hookspec
     def config_hook(self, config_parser: configparser.ConfigParser) -> None:
         """Hook into the config file parsing.
-        
+
         Args:
             config: the config parser after config has been read.
         """
@@ -128,21 +128,22 @@ class ExtensionCommandHook:
     @hookspec
     def create_extension_command(self) -> ExtensionCommand:
         """Create an extension command to add to the RepoBee CLI. The command will
-        be added as one of the top-level subcommands of RepoBee. It should return
-        an :py:class:`~repobee_plug.containers.ExtensionCommand`.
+        be added as one of the top-level subcommands of RepoBee. It should
+        return an :py:class:`~repobee_plug.containers.ExtensionCommand`.
 
         .. code-block:: python
-            
+
             def command(args: argparse.Namespace, api: apimeta.API)
 
-        The ``command`` function will be called if the extension command is used
-        on the command line.
+        The ``command`` function will be called if the extension command is
+        used on the command line.
 
-        Note that the :py:class:`~repobee_plug.containers.RepoBeeExtensionParser` class
-        is just a thin wrapper around :py:class:`argparse.ArgumentParser`, and can
+        Note that the
+        :py:class:`~repobee_plug.containers.RepoBeeExtensionParser` class is
+        just a thin wrapper around :py:class:`argparse.ArgumentParser`, and can
         be used in an identical manner. The following is an example definition
-        of this hook that adds a subcommand called ``example-command``, that can
-        be called with ``repobee example-command``.
+        of this hook that adds a subcommand called ``example-command``, that
+        can be called with ``repobee example-command``.
 
         .. code-block:: python
 

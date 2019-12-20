@@ -9,9 +9,8 @@ import collections
 import enum
 import argparse
 import pluggy
-import typing
 
-from typing import Mapping, Any, List, Optional, Callable, Iterable
+from typing import Mapping, Any, Optional, Callable, Iterable
 
 from repobee_plug import _exceptions
 
@@ -34,7 +33,11 @@ class HookResult(
     """Container for storing results from hooks."""
 
     def __new__(
-        cls, hook: str, status: Status, msg: str, data: Mapping[Any, Any] = None,
+        cls,
+        hook: str,
+        status: Status,
+        msg: str,
+        data: Mapping[Any, Any] = None,
     ):
         """
         Args:
@@ -112,7 +115,9 @@ class ExtensionCommand(
                 "parser must be a {.__name__}".format(ExtensionParser)
             )
         if not callable(callback):
-            raise _exceptions.ExtensionCommandError("callback must be a callable")
+            raise _exceptions.ExtensionCommandError(
+                "callback must be a callable"
+            )
         return super().__new__(
             cls,
             parser,

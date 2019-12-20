@@ -22,9 +22,8 @@ setup(
     author="Simon Larsén",
     author_email="slarse@kth.se",
     url="https://github.com/repobee/repobee-plug",
-    download_url="https://github.com/repobee/repobee-plug/archive/v{}.tar.gz".format(
-        __version__
-    ),
+    download_url="https://github.com/repobee/repobee-plug/archive/"
+    "v{}.tar.gz".format(__version__),
     license="MIT",
     packages=find_packages(exclude=("tests", "docs")),
     tests_require=test_requirements,

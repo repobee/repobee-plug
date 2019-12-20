@@ -23,9 +23,10 @@ def deprecate(
 
     Args:
         remove_by_version: A string that should contain a version number.
-        replacement: An optional string with the name of the replacing function.
+        replacement: An optional string with the name of the replacing
+            function.
     Returns:
-        A function 
+        A function
 
     """
     dep = _containers.Deprecation(
@@ -34,7 +35,9 @@ def deprecate(
 
     def _inner(func):
         if "repobee_plug_spec" not in dir(func):
-            raise _exceptions.PlugError("can't deprecate non-hook function", func=func)
+            raise _exceptions.PlugError(
+                "can't deprecate non-hook function", func=func
+            )
         deprs = _Deprecations()
         deprs.deprecate_hook(func.__name__, dep)
         return func
@@ -53,8 +56,8 @@ def deprecated_hooks() -> Mapping[str, _containers.Deprecation]:
 class _Deprecations:
     """Class for keeping track of deprecated functionality. This class is
     singleton and is meant to be accessed by using its constructor. That is to
-    say, every call to ``Deprecations()`` will return the same instance, only the
-    first call will actually instantiate a new instance.
+    say, every call to ``Deprecations()`` will return the same instance, only
+    the first call will actually instantiate a new instance.
     """
 
     _instance = None

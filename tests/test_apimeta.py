@@ -109,7 +109,8 @@ class TestAPI:
                 return expected
 
         assert (
-            API(None, None, None, None).ensure_teams_and_members(None, None) == expected
+            API(None, None, None, None).ensure_teams_and_members(None, None)
+            == expected
         )
 
 
@@ -120,7 +121,8 @@ class TestAPIObject:
         """
 
         class APIObj(
-            _apimeta.APIObject, collections.namedtuple("APIObj", "implementation")
+            _apimeta.APIObject,
+            collections.namedtuple("APIObj", "implementation"),
         ):
             def __new__(cls):
                 return super().__new__(cls, implementation=None)
@@ -139,7 +141,8 @@ class TestAPIObject:
         implementation = 42
 
         class APIObj(
-            _apimeta.APIObject, collections.namedtuple("APIObj", "implementation")
+            _apimeta.APIObject,
+            collections.namedtuple("APIObj", "implementation"),
         ):
             def __new__(cls):
                 return super().__new__(cls, implementation=implementation)

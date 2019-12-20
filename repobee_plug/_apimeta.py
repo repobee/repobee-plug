@@ -46,7 +46,9 @@ class APIObject:
         """
         attr = object.__getattribute__(self, name)
         if attr is None and name == "implementation":
-            raise AttributeError("invalid access to 'implementation': not initialized")
+            raise AttributeError(
+                "invalid access to 'implementation': not initialized"
+            )
         return attr
 
 
@@ -87,7 +89,13 @@ class Repo(
     """Wrapper class for a Repo API object."""
 
     def __new__(
-        cls, name, description, private, team_id=None, url=None, implementation=None
+        cls,
+        name,
+        description,
+        private,
+        team_id=None,
+        url=None,
+        implementation=None,
     ):
         _check_name_length(name)
         return super().__new__(
@@ -96,7 +104,8 @@ class Repo(
 
 
 class Team(
-    APIObject, collections.namedtuple("Repo", "name members id implementation".split())
+    APIObject,
+    collections.namedtuple("Repo", "name members id implementation".split()),
 ):
     """Wrapper class for a Team API object."""
 
@@ -119,7 +128,13 @@ class Issue(
     """Wrapper class for an Issue API object."""
 
     def __new__(
-        cls, title, body, number=None, created_at=None, author=None, implementation=None
+        cls,
+        title,
+        body,
+        number=None,
+        created_at=None,
+        author=None,
+        implementation=None,
     ):
         return super().__new__(
             cls, title, body, number, created_at, author, implementation
@@ -156,7 +171,9 @@ class APISpec:
         _not_implemented()
 
     def ensure_teams_and_members(
-        self, teams: Iterable[Team], permission: TeamPermission = TeamPermission.PUSH
+        self,
+        teams: Iterable[Team],
+        permission: TeamPermission = TeamPermission.PUSH,
     ) -> List[Team]:
         """Ensure that the teams exist, and that their members are added to the
         teams.
@@ -253,7 +270,9 @@ class APISpec:
         """
         _not_implemented()
 
-    def open_issue(self, title: str, body: str, repo_names: Iterable[str]) -> None:
+    def open_issue(
+        self, title: str, body: str, repo_names: Iterable[str]
+    ) -> None:
         """Open the specified issue in all repos with the given names, in the
         target organization.
 
@@ -275,7 +294,9 @@ class APISpec:
         _not_implemented()
 
     def add_repos_to_review_teams(
-        self, team_to_repos: Mapping[str, Iterable[str]], issue: Optional[Issue] = None
+        self,
+        team_to_repos: Mapping[str, Iterable[str]],
+        issue: Optional[Issue] = None,
     ) -> None:
         """Add repos to review teams. For each repo, an issue is opened, and
         every user in the review team is assigned to it. If no issue is
@@ -289,7 +310,10 @@ class APISpec:
         _not_implemented()
 
     def get_review_progress(
-        self, review_team_names: Iterable[str], teams: Iterable[Team], title_regex: str
+        self,
+        review_team_names: Iterable[str],
+        teams: Iterable[Team],
+        title_regex: str,
     ) -> Mapping[str, List]:
         """Get the peer review progress for the specified review teams and
         student teams by checking which review team members have opened issues
@@ -323,7 +347,9 @@ class APISpec:
         """
         _not_implemented()
 
-    def discover_repos(self, teams: Iterable[Team]) -> Generator[Repo, None, None]:
+    def discover_repos(
+        self, teams: Iterable[Team]
+    ) -> Generator[Repo, None, None]:
         """Return all repositories related to the provided teams.
 
         Args:
@@ -381,7 +407,8 @@ def methods(attrdict):
     return {
         name: method
         for name, method in attrdict.items()
-        if callable(method) and (not name.startswith("_") or name == "__init__")
+        if callable(method)
+        and (not name.startswith("_") or name == "__init__")
     }
 
 
@@ -434,7 +461,9 @@ class APIMeta(type):
     def __new__(mcs, name, bases, attrdict):
         api_methods = methods(APISpec.__dict__)
         implemented_methods = methods(attrdict)
-        non_api_methods = set(implemented_methods.keys()) - set(api_methods.keys())
+        non_api_methods = set(implemented_methods.keys()) - set(
+            api_methods.keys()
+        )
         if non_api_methods:
             raise _exceptions.APIImplementationError(
                 "non-API methods may not be public: {}".format(non_api_methods)

@@ -10,7 +10,11 @@ class TestExtensionCommand:
 
         with pytest.raises(_exceptions.ExtensionCommandError) as exc_info:
             _containers.ExtensionCommand(
-                parser, "test-command", "help", "description", lambda args, api: None
+                parser,
+                "test-command",
+                "help",
+                "description",
+                lambda args, api: None,
             )
 
         assert "parser must be a ExtensionParser" in str(exc_info.value)
@@ -18,7 +22,7 @@ class TestExtensionCommand:
     def test_raises_if_callback_is_not_callable(self):
         callback = 2
 
-        with pytest.raises(_exceptions.ExtensionCommandError) as exc_info:
+        with pytest.raises(_exceptions.ExtensionCommandError):
             _containers.ExtensionCommand(
                 _containers.ExtensionParser(),
                 "test-command",

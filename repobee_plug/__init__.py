@@ -1,6 +1,6 @@
 import pluggy
 
-from repobee_plug.__version import __version__
+from repobee_plug.__version import __version__  # noqa: F401
 from repobee_plug._pluginmeta import Plugin
 from repobee_plug._containers import Review
 from repobee_plug._containers import hookimpl as repobee_hook

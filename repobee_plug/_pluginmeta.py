@@ -1,5 +1,3 @@
-from typing import Dict, List
-
 from repobee_plug import _exceptions
 from repobee_plug import _corehooks
 from repobee_plug import _exthooks
@@ -39,7 +37,8 @@ class _PluginMeta(type):
         methods = cls._extract_public_methods(attrdict)
         cls._check_names(methods)
         hooked_methods = {
-            name: _containers.hookimpl(method) for name, method in methods.items()
+            name: _containers.hookimpl(method)
+            for name, method in methods.items()
         }
         attrdict.update(hooked_methods)
 
@@ -70,16 +69,17 @@ class Plugin(metaclass=_PluginMeta):
     ``repobee``, they must inherit from this class.
 
     Public methods must be hook methods, i.e. implement the specification of
-    one of the hooks defined in :py:mod:`~repobee_plug.corehooks.PeerReviewHook`
-    or :py:mod:`~repobee_plug.exthooks.CloneHook`.  If there are any other
-    public methods, an error is raised on class creation. As long as the method
-    has the correct name, it will be recognized as a hook method.
+    one of the hooks defined in
+    :py:mod:`~repobee_plug.corehooks.PeerReviewHook` or
+    :py:mod:`~repobee_plug.exthooks.CloneHook`.  If there are any other public
+    methods, an error is raised on class creation. As long as the method has
+    the correct name, it will be recognized as a hook method.
 
     The signature of the method is not checked until the hook is registered by
     the :py:const:`repobee_plug.manager` (an instance of
-    :py:class:`pluggy.manager.PluginManager`). Therefore, when testing a plugin,
-    it is a good idea to include a test where it is registered with the manager
-    to ensure that it has the correct signatures.
+    :py:class:`pluggy.manager.PluginManager`). Therefore, when testing a
+    plugin, it is a good idea to include a test where it is registered with the
+    manager to ensure that it has the correct signatures.
 
     Private methods (i.e. methods prefixed with ``_``) carry no such
     restrictions.

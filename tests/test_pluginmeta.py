@@ -1,5 +1,4 @@
 import pytest
-import pluggy
 from repobee_plug import _pluginmeta
 from repobee_plug import _exceptions
 
@@ -43,7 +42,11 @@ class TestPluginInheritance:
                 pass
 
             def generate_review_allocations(
-                self, master_repo_name, students, num_reviews, review_team_name_function
+                self,
+                master_repo_name,
+                students,
+                num_reviews,
+                review_team_name_function,
             ):
                 pass
 
@@ -75,7 +78,11 @@ class TestPluginInheritance:
                 pass
 
             def generate_review_allocations(
-                self, master_repo_name, students, num_reviews, review_team_name_function
+                self,
+                master_repo_name,
+                students,
+                num_reviews,
+                review_team_name_function,
             ):
                 pass
 

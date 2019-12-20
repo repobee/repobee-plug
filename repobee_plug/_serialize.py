@@ -28,7 +28,7 @@ def result_mapping_to_json(
 
 
 def json_to_result_mapping(
-    json_string: str
+    json_string: str,
 ) -> Mapping[str, List[_containers.HookResult]]:
     """Deserialize a JSON string to a mapping ``repo_name: str -> hook_results:
     List[HookResult]``

@@ -36,7 +36,8 @@ class PlugError(Exception):
             if not self._kwargs
             else ". Passed arguments: "
             + ", ".join(
-                "{}={}".format(key, value) for key, value in self._kwargs.items()
+                "{}={}".format(key, value)
+                for key, value in self._kwargs.items()
             )
         )
         return "{}{}".format(formatted_args, formatted_kwargs)

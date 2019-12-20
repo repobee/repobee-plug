@@ -5,18 +5,19 @@
 
 .. moduleauthor:: Simon Larsén
 """
-import pathlib
 import collections
-from typing import Callable, Optional
-
-from repobee_plug import _exceptions
-from repobee_plug import _apimeta
-from repobee_plug import _containers
 
 
 class Task(
     collections.namedtuple(
-        "Task", ("act", "add_option", "handle_args", "handle_config", "persist_changes")
+        "Task",
+        (
+            "act",
+            "add_option",
+            "handle_args",
+            "handle_config",
+            "persist_changes",
+        ),
     )
 ):
     """A data structure for describing a task. Tasks are operations that
@@ -40,7 +41,9 @@ class Task(
 
     .. code-block:: python
 
-        def act(path: pathlib.Path, api: plug.API) -> Optional[containers.HookResult]:
+        def act(
+            path: pathlib.Path, api: plug.API
+        ) -> Optional[containers.HookResult]:
 
         def add_option(parser: argparse.ArgumentParser) -> None:
 

@@ -11,7 +11,7 @@ to allow for this dynamic override.
 .. moduleauthor:: Simon Larsén
 """
 
-from typing import Union, Optional, Iterable, List, Mapping, Callable, Tuple
+from typing import List, Tuple
 
 from repobee_plug import _apimeta
 from repobee_plug import _containers
@@ -31,11 +31,11 @@ class PeerReviewHook:
 
         The provided teams of students should be treated as units. That is to
         say, if there are multiple members in a team, they should always be
-        assigned to the same review team. The best way to merge two teams 
+        assigned to the same review team. The best way to merge two teams
         ``team_a`` and ``team_b`` into one review team is to simply do:
 
         .. code-block:: python
-            
+
             team_c = apimeta.Team(members=team_a.members + team_b.members)
 
         This can be scaled to however many teams you would like to merge. As a
@@ -63,7 +63,8 @@ class PeerReviewHook:
             num_reviews: Amount of reviews each student should perform (and
                 consequently amount of reviewers per repo)
         Returns:
-            A list of :py:class:`~repobee_plug.containers.ReviewAllocation` tuples.
+            A list of :py:class:`~repobee_plug.containers.ReviewAllocation`
+                tuples.
         """
 
 
@@ -73,7 +74,7 @@ class APIHook:
     @hookspec(firstresult=True)
     def get_api_class(self):
         """Return an API platform class. Must be a subclass of apimeta.API.
-        
+
         Returns:
             An apimeta.API subclass.
         """
