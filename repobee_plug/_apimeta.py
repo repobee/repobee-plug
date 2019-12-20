@@ -357,6 +357,7 @@ class APISpec:
         Returns:
             A list of Repo tuples.
         """
+        _not_implemented()
 
     @staticmethod
     def verify_settings(
