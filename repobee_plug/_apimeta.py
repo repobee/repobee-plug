@@ -323,6 +323,15 @@ class APISpec:
         """
         _not_implemented()
 
+    def discover_repos(self, teams: Iterable[Team]) -> Generator[Repo, None, None]:
+        """Return all repositories related to the provided teams.
+
+        Args:
+            teams: Team tuples.
+        Returns:
+            A list of Repo tuples.
+        """
+
     @staticmethod
     def verify_settings(
         user: str,
