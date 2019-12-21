@@ -65,22 +65,25 @@ class _PluginMeta(type):
 
 
 class Plugin(metaclass=_PluginMeta):
-    """Base class for plugin classes. For plugin classes to be picked up by
-    ``repobee``, they must inherit from this class.
+    """This is a base class for plugin classes. For plugin classes to be picked
+    up by RepoBee, they must inherit from this class.
 
-    Public methods must be hook methods, i.e. implement the specification of
-    one of the hooks defined in
-    :py:mod:`~repobee_plug.corehooks.PeerReviewHook` or
-    :py:mod:`~repobee_plug.exthooks.CloneHook`.  If there are any other public
-    methods, an error is raised on class creation. As long as the method has
-    the correct name, it will be recognized as a hook method.
+    Public methods must be hook methods. If there are any public methods that
+    are not hook methods, an error is raised on creation of the class. As long
+    as the method has the correct name, it will be recognized as a hook method
+    during creation. However, if the signature is incorrect, the plugin
+    framework will raise a runtime exception once it is called. Private methods
+    (i.e.  methods prefixed with ``_``) carry no restrictions.
 
-    The signature of the method is not checked until the hook is registered by
-    the :py:const:`repobee_plug.manager` (an instance of
+    The signatures of hook methods are not checked until the plugin class is
+    registered by the :py:const:`repobee_plug.manager` (an instance of
     :py:class:`pluggy.manager.PluginManager`). Therefore, when testing a
     plugin, it is a good idea to include a test where it is registered with the
     manager to ensure that it has the correct signatures.
 
-    Private methods (i.e. methods prefixed with ``_``) carry no such
-    restrictions.
+    A plugin class is instantiated exactly once; when RepoBee loads the plugin.
+    This means that any state that is stored in the plugin will be carried
+    throughout the execution of a RepoBee command. This makes plugin classes
+    well suited for implementing tasks that require command line options or
+    configuration values, as well as for implementing extension commands.
     """
