@@ -83,3 +83,4 @@ def test_hook_result_deprecation():
     )
 
     assert result == expected
+    assert result.hook == result.name

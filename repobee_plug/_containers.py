@@ -70,6 +70,13 @@ class Result(
         """
         super().__init__()
 
+    @property
+    def hook(self) -> str:
+        LOGGER.warning(
+            "the Result.hook attribute is deprecated, use Result.name instead"
+        )
+        return self.name
+
 
 def HookResult(hook, status, msg, data=None) -> Result:
     """Backwards compat function.
