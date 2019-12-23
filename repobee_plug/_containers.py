@@ -100,7 +100,7 @@ class BaseParser(enum.Enum):
             ``--students`` and `--students-file`` arguments.
         REPO_NAMES: Represents the repo names parser, which includes the
             ``--master-repo-names`` argument.
-        REPO_DISCOVERY_PARSER: Represents the repo discovery parser, which adds
+        REPO_DISCOVERY: Represents the repo discovery parser, which adds
             both the ``--master-repo-names`` and the ``--discover-repos``
             arguments.
         MASTER_ORG: Represents the master organization parser, which includes
@@ -110,7 +110,7 @@ class BaseParser(enum.Enum):
     BASE = "base"
     STUDENTS = "students"
     REPO_NAMES = "repo-names"
-    REPO_DISCOVERY_PARSER = "repo-discovery"
+    REPO_DISCOVERY = "repo-discovery"
     MASTER_ORG = "master-org"
 
 
