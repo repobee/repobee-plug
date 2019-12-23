@@ -7,6 +7,14 @@
 """
 import collections
 
+from pathlib import Path
+from argparse import ArgumentParser, Namespace
+from configparser import ConfigParser
+from typing import Callable, Optional
+
+from repobee_plug._containers import HookResult
+from repobee_plug._apimeta import API
+
 
 class Task(
     collections.namedtuple(
@@ -25,29 +33,6 @@ class Task(
     task) or on master repos before setting up student repos (a setup task).
     Only the ``act`` attribute is required, all other attributes can be
     omitted.
-
-    Note that the types of the attributes below are written with arrow notation
-    for functions on the following form:
-
-    .. code-block:: python
-
-        (arg_type_1, arg_type_2, ...) -> return_type
-
-    Attributes:
-        act ((pathlib.Path, API) -> Optional[HookResult]]): A required callback
-            function that takes the path to a repository worktree and an API
-            instance, and optionally returns a HookResult to report results.
-        add_option (Optional[ (argparse.ArgumentParser) -> None ]): An optional
-            callback function that adds options to the CLI parser.
-        handle_args (Optional[ (argparse.Namespace) -> None ]): An optional
-            callback function that receives the parsed CLI args.
-        handle_config (Optional[ (configparser.ConfigParser) -> None ]): An
-            optional callback function that receives the config parser.
-        persist_changes (bool): If True, the task requires that changes to the
-            repository that has been acted upon be persisted. This means
-            different things in different contexts (e.g.  whether the task is
-            executed in a clone context or in a setup context), and may not be
-            supported for all contexts.
 
     The callback methods should have the following headers.
 
@@ -107,25 +92,40 @@ class Task(
 
     def __new__(
         cls,
-        act,
-        add_option=None,
-        handle_args=None,
-        handle_config=None,
-        persist_changes=False,
+        act: Callable[[Path, API], HookResult],
+        add_option: Optional[Callable[[ArgumentParser], None]] = None,
+        handle_args: Optional[Callable[[ConfigParser], None]] = None,
+        handle_config: Optional[Callable[[Namespace], None]] = None,
+        persist_changes: bool = False,
     ):
         return super().__new__(
             cls, act, add_option, handle_args, handle_config, persist_changes
         )
 
+    # The init method is just added for documentation purposes
     def __init__(
         self,
-        act,
-        add_option=None,
-        handle_args=None,
-        handle_config=None,
-        persist_changes=False,
+        act: Callable[[Path, API], HookResult],
+        add_option: Optional[Callable[[ArgumentParser], None]] = None,
+        handle_args: Optional[Callable[[ConfigParser], None]] = None,
+        handle_config: Optional[Callable[[Namespace], None]] = None,
+        persist_changes: bool = False,
     ):
-        """This is just for documentation."""
-        return super().__init__(
-            act, add_option, handle_args, handle_config, persist_changes
-        )
+        """
+        Args:
+            act: A required callback function that takes the path to a
+                repository worktree and an API instance, and optionally returns
+                a HookResult to report results.
+            add_option: An optional callback function that adds options to the
+                CLI parser.
+            handle_args: An optional callback function that receives the parsed
+                CLI args.
+            handle_config: An optional callback function that receives the
+                config parser.
+            persist_changes: If True, the task requires that changes to the
+                repository that has been acted upon be persisted. This means
+                different things in different contexts (e.g.  whether the task
+                is executed in a clone context or in a setup context), and may
+                not be supported for all contexts.
+        """
+        super().__init__()

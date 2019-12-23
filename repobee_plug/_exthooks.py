@@ -70,11 +70,11 @@ class CloneHook:
     ) -> Optional[HookResult]:
         """Do something with a cloned repo.
 
-        .. important::
+        .. deprecated:: 0.12.0
 
-            As of v0.12.0, this hook is deprecated and has been replaced by
-            :py:meth:`TaskHooks.clone_task`. Once all known, existing plugins
-            have been migrated to the new hook, this hook will be removed.
+            This hook is has been replaced by :py:meth:`TaskHooks.clone_task`.
+            Once all known, existing plugins have been migrated to the new
+            hook, this hook will be removed.
 
         Args:
             path: Path to the repo.
@@ -92,11 +92,11 @@ class CloneHook:
         """Do something with the clone repos subparser before it is used used to
         parse CLI options. The typical task is to add options to it.
 
-        .. important::
+        .. deprecated:: 0.12.0
 
-            As of v0.12.0, this hook is deprecated and has been replaced by
-            :py:meth:`~TaskHooks.clone_task`. Once all known, existing plugins
-            have been migrated to the new hook, this hook will be removed.
+            This hook is has been replaced by :py:meth:`TaskHooks.clone_task`.
+            Once all known, existing plugins have been migrated to the new
+            hook, this hook will be removed.
 
         Args:
             clone_parser: The ``clone`` subparser.
@@ -128,8 +128,9 @@ class ExtensionCommandHook:
     @hookspec
     def create_extension_command(self) -> ExtensionCommand:
         """Create an extension command to add to the RepoBee CLI. The command will
-        be added as one of the top-level subcommands of RepoBee. It should
-        return an :py:class:`~repobee_plug.containers.ExtensionCommand`.
+        be added as one of the top-level subcommands of RepoBee. This hook is
+        called precisely once, and should return an
+        :py:class:`~repobee_plug.ExtensionCommand`.
 
         .. code-block:: python
 
@@ -175,6 +176,9 @@ class ExtensionCommandHook:
             ``ExtensionCommand``. This will automatically add the options that
             the API requires to the CLI options of the subcommand, and
             initialize the api and pass it in.
+
+        See the documentation for :py:class:`~repobee_plug.ExtensionCommand`
+        for more details on it.
 
         Returns:
             A :py:class:`~repobee_plug.containers.ExtensionCommand`.

@@ -10,9 +10,10 @@ import enum
 import argparse
 import pluggy
 
-from typing import Mapping, Any, Optional, Callable, Iterable
+from typing import Mapping, Any, Optional, Callable, Iterable, List
 
 from repobee_plug import _exceptions
+from repobee_plug import _apimeta
 
 
 hookspec = pluggy.HookspecMarker(__package__)
@@ -20,7 +21,13 @@ hookimpl = pluggy.HookimplMarker(__package__)
 
 
 class Status(enum.Enum):
-    """Status codes enum."""
+    """Status codes enums for HookResults.
+
+    Attributes:
+        SUCCESS: Signifies a plugin execution without any complications.
+        WARNING: Signifies a plugin execution with non-critical failures.
+        ERROR: Signifies a critical error during execution.
+    """
 
     SUCCESS = "success"
     WARNING = "warning"
@@ -39,6 +46,15 @@ class HookResult(
         msg: str,
         data: Mapping[Any, Any] = None,
     ):
+        return super().__new__(cls, hook, status, msg, data)
+
+    def __init__(
+        self,
+        hook: str,
+        status: Status,
+        msg: str,
+        data: Mapping[Any, Any] = None,
+    ):
         """
         Args:
             hook: Name of the hook.
@@ -47,7 +63,7 @@ class HookResult(
             data: Any additional data that the hook would like to report. This
                 is primarily for storing hook results as JSON.
         """
-        return super().__new__(cls, hook, status, msg, data)
+        super().__init__()
 
 
 class ExtensionParser(argparse.ArgumentParser):
@@ -58,7 +74,19 @@ class ExtensionParser(argparse.ArgumentParser):
 
 
 class BaseParser(enum.Enum):
-    """Enumeration of base parsers that an extension command can request."""
+    """Enumeration of base parsers that an extension command can request to
+    have added to it.
+
+    Attributes:
+        BASE: Represents the base parser, which includes the ``--user``,
+            ``--org-name``, ``--base-url`` and ``--token`` arguments.
+        STUDENTS: Represents the students parser, which includes the
+            ``--students`` and `--students-file`` arguments.
+        REPO_NAMES: Represents the repo names parser, which includes the
+            ``--master-repo-names`` argument.
+        MASTER_ORG: Represents the master organization parser, which includes
+            the ``--master-org`` argument.
+    """
 
     BASE = "base"
     STUDENTS = "students"
@@ -88,7 +116,37 @@ class ExtensionCommand(
         name: str,
         help: str,
         description: str,
-        callback: Callable[[argparse.Namespace, "apimeta.API"], None],
+        callback: Callable[[argparse.Namespace, _apimeta.API], None],
+        requires_api: bool = False,
+        requires_base_parsers: Optional[List[BaseParser]] = None,
+    ):
+        if not isinstance(parser, ExtensionParser):
+            raise _exceptions.ExtensionCommandError(
+                "parser must be a {.__name__}".format(ExtensionParser)
+            )
+        if not callable(callback):
+            raise _exceptions.ExtensionCommandError(
+                "callback must be a callable"
+            )
+        return super().__new__(
+            cls,
+            parser,
+            name,
+            help,
+            description,
+            callback,
+            requires_api,
+            requires_base_parsers,
+        )
+
+    # the init method is just for documentation purposes
+    def __init__(
+        self,
+        parser: ExtensionParser,
+        name: str,
+        help: str,
+        description: str,
+        callback: Callable[[argparse.Namespace, _apimeta.API], None],
         requires_api: bool = False,
         requires_base_parsers: Optional[Iterable[BaseParser]] = None,
     ):
@@ -109,25 +167,14 @@ class ExtensionCommand(
                 then important not to have clashing option names. If False, the
                 base arguments are not added to the CLI, and None is passed in
                 place of the API.
+            requires_base_parsers: A list of
+                :py:class:`repobee_plug.BaseParser` that decide which base
+                parsers are added to this command. For example, setting
+                ``requires_base_parsers = [BaseParser.STUDENTS]`` adds the
+                ``--students`` and ``--students-file`` options to this
+                extension command's parser.
         """
-        if not isinstance(parser, ExtensionParser):
-            raise _exceptions.ExtensionCommandError(
-                "parser must be a {.__name__}".format(ExtensionParser)
-            )
-        if not callable(callback):
-            raise _exceptions.ExtensionCommandError(
-                "callback must be a callable"
-            )
-        return super().__new__(
-            cls,
-            parser,
-            name,
-            help,
-            description,
-            callback,
-            requires_api,
-            requires_base_parsers,
-        )
+        super().__init__()
 
     def __eq__(self, other):
         """Two ExtensionCommands are equal if they compare equal in all
@@ -142,9 +189,27 @@ class ExtensionCommand(
 ReviewAllocation = collections.namedtuple(
     "ReviewAllocation", "review_team reviewed_team"
 )
+ReviewAllocation.__doc__ = """
+Args:
+    review_team (Team): The team of reviewers.
+    reviewed_team (Team): The team that is to be reviewed.
+"""
 
 Review = collections.namedtuple("Review", ["repo", "done"])
+Review.__doc__ = """
+Args:
+    repo (Repo): The reviewed repository.
+    done (bool): Whether or not the review is done.
+"""
 
 Deprecation = collections.namedtuple(
     "Deprecation", ["replacement", "remove_by_version"]
 )
+Deprecation.__doc__ = """
+Args:
+    replacement (str): The functionality that replaces the deprecated
+        functionality.
+    remove_by_version (str): A version number on the form
+        ``MAJOR.MINOR.PATCH`` by which the deprecated functionality will be
+        removed.
+"""

@@ -55,6 +55,7 @@ Extension hooks
     :ref:`implementing hooks`.
 
 .. automodule:: repobee_plug._exthooks
+    :noindex:
     :members:
 
 .. _corehooks api:
@@ -70,6 +71,7 @@ Core hooks
     :ref:`implementing hooks`.
 
 .. automodule:: repobee_plug._corehooks
+    :noindex:
     :members:
 
 API Wrappers
