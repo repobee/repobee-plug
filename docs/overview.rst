@@ -81,6 +81,8 @@ text files. Extension commands are pretty awesome because they integrate
 seamlessly with RepoBee, can leverage some of RepoBee's powerful CLI
 functionality and can do pretty much whatever they want on top of that.
 
+.. _implementing hooks:
+
 Implementing hook functions
 ---------------------------
 There are two ways to implement hooks: as standalone functions or as methods
