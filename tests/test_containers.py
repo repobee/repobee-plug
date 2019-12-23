@@ -66,6 +66,29 @@ class TestExtensionCommand:
 
         assert lhs == rhs
 
+    def test_requires_api_false_incompatible_with_discovery_parser(self):
+        """Test that requires_api=False is incompatible with requesting the
+        discovery parser.
+        """
+        parser = _containers.ExtensionParser()
+
+        def callback(args, api):
+            return None
+
+        with pytest.raises(_exceptions.ExtensionCommandError) as exc_info:
+            _containers.ExtensionCommand(
+                parser=parser,
+                name="test",
+                description="test",
+                help="help",
+                callback=callback,
+                requires_base_parsers=[_containers.BaseParser.REPO_DISCOVERY],
+                requires_api=False,
+            )
+
+        assert "REPO_DISCOVERY" in str(exc_info.value)
+        assert "requires_api" in str(exc_info.value)
+
 
 def test_hook_result_deprecation():
     expected = _containers.Result(

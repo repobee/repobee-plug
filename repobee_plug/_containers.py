@@ -155,6 +155,13 @@ class ExtensionCommand(
             raise _exceptions.ExtensionCommandError(
                 "callback must be a callable"
             )
+        if (
+            BaseParser.REPO_DISCOVERY in (requires_base_parsers or [])
+            and not requires_api
+        ):
+            raise _exceptions.ExtensionCommandError(
+                "must set requires_api=True to use REPO_DISCOVERY base parser"
+            )
         return super().__new__(
             cls,
             parser,
@@ -193,7 +200,8 @@ class ExtensionCommand(
                 platform API is then passed to the callback function. It is
                 then important not to have clashing option names. If False, the
                 base arguments are not added to the CLI, and None is passed in
-                place of the API.
+                place of the API. If you include ``REPO_DISCOVERY`` in
+                ``requires_base_parsers``, then you *must* set this to True.
             requires_base_parsers: A list of
                 :py:class:`repobee_plug.BaseParser` that decide which base
                 parsers are added to this command. For example, setting
