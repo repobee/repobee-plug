@@ -15,6 +15,7 @@ from repobee_plug._containers import ExtensionCommand
 from repobee_plug._containers import ReviewAllocation
 from repobee_plug._containers import BaseParser
 from repobee_plug._containers import Deprecation
+from repobee_plug._containers import HookResult
 from repobee_plug._tasks import Task
 
 # Hook functions
@@ -68,6 +69,7 @@ __all__ = [
     "manager",
     # Containers
     "Result",
+    "HookResult",
     "Status",
     "ExtensionParser",
     "ExtensionCommand",

@@ -12,9 +12,12 @@ import pluggy
 
 from typing import Mapping, Any, Optional, Callable, Iterable, List
 
+import daiquiri
+
 from repobee_plug import _exceptions
 from repobee_plug import _apimeta
 
+LOGGER = daiquiri.getLogger(__file__)
 
 hookspec = pluggy.HookspecMarker(__package__)
 hookimpl = pluggy.HookimplMarker(__package__)
@@ -66,6 +69,17 @@ class Result(
                 primarily used for JSON storage.
         """
         super().__init__()
+
+
+def HookResult(hook, status, msg, data=None) -> Result:
+    """Backwards compat function.
+
+    .. deprecate:: 0.12.0
+
+        Replaced by :py:class:`Result`.
+    """
+    LOGGER.warning("HookResult is deprecated and has been replaced by Result")
+    return Result(name=hook, status=status, msg=msg, data=data)
 
 
 class ExtensionParser(argparse.ArgumentParser):
