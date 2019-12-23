@@ -14,8 +14,8 @@ latter.
     import repobee_plug as plug
 
     def act(path, api):
-        result = plug.HookResult(
-            hook="hello",
+        result = plug.Result(
+            name="hello",
             msg="Hello, world!",
             status=plug.Status.SUCCESS,
         )
@@ -108,10 +108,10 @@ Containers
 ==========
 The containers in ``repobee-plug`` are immutable classes for storing data.
 Probably the most important containers are the
-:py:class:`~repobee_plug.HookResult` and the :py:class:`~repobee_plug.Task`
+:py:class:`~repobee_plug.Result` and the :py:class:`~repobee_plug.Task`
 classes.
 
-.. autoclass:: repobee_plug.HookResult
+.. autoclass:: repobee_plug.Result
     :members:
 
 .. autoclass:: repobee_plug.Task

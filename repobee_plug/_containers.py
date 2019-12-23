@@ -21,7 +21,7 @@ hookimpl = pluggy.HookimplMarker(__package__)
 
 
 class Status(enum.Enum):
-    """Status codes enums for HookResults.
+    """Status codes enums for Results.
 
     Attributes:
         SUCCESS: Signifies a plugin execution without any complications.
@@ -34,34 +34,36 @@ class Status(enum.Enum):
     ERROR = "error"
 
 
-class HookResult(
-    collections.namedtuple("HookResult", ("hook", "status", "msg", "data"))
+class Result(
+    collections.namedtuple("Result", ("name", "status", "msg", "data"))
 ):
     """Container for storing results from hooks."""
 
     def __new__(
         cls,
-        hook: str,
+        name: str,
         status: Status,
         msg: str,
-        data: Mapping[Any, Any] = None,
+        data: Optional[Mapping[Any, Any]] = None,
     ):
-        return super().__new__(cls, hook, status, msg, data)
+        return super().__new__(cls, name, status, msg, data)
 
     def __init__(
         self,
-        hook: str,
+        name: str,
         status: Status,
         msg: str,
-        data: Mapping[Any, Any] = None,
+        data: Optional[Mapping[Any, Any]] = None,
     ):
         """
         Args:
-            hook: Name of the hook.
-            status: Status of the hook execution.
-            msg: A hook message.
-            data: Any additional data that the hook would like to report. This
-                is primarily for storing hook results as JSON.
+            name: Name to associate with this result. This is typically the
+                name of the plugin that returns this result.
+            status: Status of the plugin execution.
+            msg: A free-form result message.
+            data: Semi-structured data in the form of a dictionary. All of the
+                contents of the dictionary should be serializable as this is
+                primarily used for JSON storage.
         """
         super().__init__()
 

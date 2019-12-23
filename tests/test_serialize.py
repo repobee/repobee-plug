@@ -32,8 +32,8 @@ def hook_result_mapping():
         ),
     ]:
         hook_results[repo_name].append(
-            _containers.HookResult(
-                hook=hook_name, status=status, msg=msg, data=data
+            _containers.Result(
+                name=hook_name, status=status, msg=msg, data=data
             )
         )
     return {

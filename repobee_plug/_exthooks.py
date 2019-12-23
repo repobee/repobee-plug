@@ -17,7 +17,7 @@ from typing import Union, Optional
 
 from repobee_plug._apimeta import API
 from repobee_plug._containers import hookspec
-from repobee_plug._containers import HookResult
+from repobee_plug._containers import Result
 from repobee_plug._containers import ExtensionCommand
 from repobee_plug._deprecation import deprecate
 from repobee_plug._tasks import Task
@@ -67,7 +67,7 @@ class CloneHook:
     @hookspec
     def act_on_cloned_repo(
         self, path: Union[str, pathlib.Path], api: API
-    ) -> Optional[HookResult]:
+    ) -> Optional[Result]:
         """Do something with a cloned repo.
 
         .. deprecated:: 0.12.0
@@ -81,7 +81,7 @@ class CloneHook:
             api: An instance of :py:class:`repobee.github_api.GitHubAPI`.
 
         Returns:
-            optionally returns a HookResult namedtuple for reporting the
+            optionally returns a Result namedtuple for reporting the
             outcome of the hook. May also return None, in which case no
             reporting will be performed for the hook.
         """

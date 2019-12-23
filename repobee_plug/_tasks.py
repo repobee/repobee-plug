@@ -12,7 +12,7 @@ from argparse import ArgumentParser, Namespace
 from configparser import ConfigParser
 from typing import Callable, Optional
 
-from repobee_plug._containers import HookResult
+from repobee_plug._containers import Result
 from repobee_plug._apimeta import API
 
 
@@ -40,7 +40,7 @@ class Task(
 
         def act(
             path: pathlib.Path, api: repobee_plug.API
-        ) -> Optional[containers.HookResult]:
+        ) -> Optional[containers.Result]:
 
         def add_option(parser: argparse.ArgumentParser) -> None:
 
@@ -77,8 +77,8 @@ class Task(
         import repobee_plug as plug
 
         def act(path, api):
-            return plug.HookResult(
-                hook="example",
+            return plug.Result(
+                name="example",
                 msg="IT LIVES!",
                 status=plug.Status.SUCCESS
             )
@@ -92,7 +92,7 @@ class Task(
 
     def __new__(
         cls,
-        act: Callable[[Path, API], HookResult],
+        act: Callable[[Path, API], Result],
         add_option: Optional[Callable[[ArgumentParser], None]] = None,
         handle_args: Optional[Callable[[ConfigParser], None]] = None,
         handle_config: Optional[Callable[[Namespace], None]] = None,
@@ -105,7 +105,7 @@ class Task(
     # The init method is just added for documentation purposes
     def __init__(
         self,
-        act: Callable[[Path, API], HookResult],
+        act: Callable[[Path, API], Result],
         add_option: Optional[Callable[[ArgumentParser], None]] = None,
         handle_args: Optional[Callable[[ConfigParser], None]] = None,
         handle_config: Optional[Callable[[Namespace], None]] = None,
@@ -115,7 +115,7 @@ class Task(
         Args:
             act: A required callback function that takes the path to a
                 repository worktree and an API instance, and optionally returns
-                a HookResult to report results.
+                a Result to report results.
             add_option: An optional callback function that adds options to the
                 CLI parser.
             handle_args: An optional callback function that receives the parsed

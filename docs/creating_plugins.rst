@@ -127,7 +127,7 @@ changes to alter the behavior of the plugin. Let's have a look at it.
             str(p) for p in path.resolve().rglob("*") if ".git" not in str(p).split(os.sep)
         ]
         output = os.linesep.join(filepaths)
-        return plug.HookResult(hook=PLUGIN_NAME, status=plug.Status.SUCCESS, msg=output)
+        return plug.Result(name=PLUGIN_NAME, status=plug.Status.SUCCESS, msg=output)
 
 
     @plug.repobee_hook
@@ -141,8 +141,8 @@ changes to alter the behavior of the plugin. Let's have a look at it.
 
 As you can see, it's rather uncomplicated. The ``act`` function simply finds
 files in the repository at ``path``, and returns a
-:py:class:`~repobee_plug.HookResult` with the results. Returning a
-:py:class:`~repobee_plug.HookResult` is optional, but if you don't RepoBee will
+:py:class:`~repobee_plug.Result` with the results. Returning a
+:py:class:`~repobee_plug.Result` is optional, but if you don't RepoBee will
 not report any results for your plugin. As listing files makes sense both for
 student and master repos, we can safely implement both the ``setup_task`` and
 ``clone_task`` hooks, and return a :py:class:`~repobee_plug.Task` with the

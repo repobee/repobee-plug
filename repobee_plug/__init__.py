@@ -8,7 +8,7 @@ from repobee_plug._containers import hookimpl as repobee_hook
 
 # Containers
 from repobee_plug._containers import Review
-from repobee_plug._containers import HookResult
+from repobee_plug._containers import Result
 from repobee_plug._containers import Status
 from repobee_plug._containers import ExtensionParser
 from repobee_plug._containers import ExtensionCommand
@@ -67,7 +67,7 @@ __all__ = [
     "repobee_hook",
     "manager",
     # Containers
-    "HookResult",
+    "Result",
     "Status",
     "ExtensionParser",
     "ExtensionCommand",

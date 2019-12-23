@@ -109,8 +109,8 @@ wanted to implement the ``clone_task`` hook, we could do it like this:
         return plug.Task(act=act)
 
     def act(path, api):
-        return plug.HookResult(
-            hook="exampleplug",
+        return plug.Result(
+            name="exampleplug",
             msg="This is a useless plugin!",
             status=plug.Status.SUCCESS,
         )
@@ -150,8 +150,8 @@ are in the habit of misspelling stuff (aren't we all?). Doing it this way,
             return plug.Task(act=self._act)
 
         def _act(self, path, api):
-            return plug.HookResult(
-                hook="exampleplug",
+            return plug.Result(
+                name="exampleplug",
                 msg="This is a useless plugin!",
                 status=plug.Status.SUCCESS,
             )
