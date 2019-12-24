@@ -270,7 +270,23 @@ large side so I won't inline it here, but I can point out the differences.
 * The plugin is implemented as a class that extends the
   :py:class:`~repobee_plug.Plugin` class, as described in :ref:`plugin class`
   for non-trivial plugins.
-*
+* The ``add_option`` callback is implemented to add a few options to the
+  parser.
+* The ``handle_args`` callback is also provided to handle the new options added
+  by ``add_option``. The reason that ``handle_args`` is a separate callback,
+  instead of just passing parsed args to the ``act`` callback, is to allow for
+  fail-fast behavior in case of bad arguments. The ``act`` callback is
+  typically called fairly late in the execution of RepoBee, but the
+  ``handle_args`` callback can be called very early.
+* It also implements
+  :py:meth:`~repobee_plug._exthooks.CloneHook.config_hook` to access the
+  configuration file. There are a few reasons why there is no
+  ``handle_config``-ish callback in :py:class:`~repobee_plug.Task`. First,
+  config file handling can't depend on the context (e.g. if ``setup`` or
+  ``clone`` is called), as the config file is accessed before the CLI arguments
+  are parsed. Second, there are other plugins (such as extension commands) that
+  also need to be able to access the config file, so it's easier to simply have
+  one way of doing it.
 
 .. note::
 

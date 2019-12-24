@@ -9,7 +9,6 @@ import collections
 
 from pathlib import Path
 from argparse import ArgumentParser, Namespace
-from configparser import ConfigParser
 from typing import Callable, Optional
 
 from repobee_plug._containers import Result
@@ -18,14 +17,7 @@ from repobee_plug._apimeta import API
 
 class Task(
     collections.namedtuple(
-        "Task",
-        (
-            "act",
-            "add_option",
-            "handle_args",
-            "handle_config",
-            "persist_changes",
-        ),
+        "Task", ("act", "add_option", "handle_args", "persist_changes")
     )
 ):
     """A data structure for describing a task. Tasks are operations that
@@ -46,12 +38,10 @@ class Task(
 
         def handle_args(args: argparse.Namespace) -> None:
 
-        def handle_config(config_parser: configparser.ConfigParser) -> None:
-
     .. note::
 
         The functions are called in the following order: ``add_option`` ->
-        ``handle_config`` -> ``handle_args`` -> ``act``.
+        ``handle_args`` -> ``act``.
 
     .. important::
 
@@ -68,7 +58,7 @@ class Task(
     scope if ``repobee setup`` is run). The callbacks can do whatever is
     appropriate for the plugin, except for changing any Git repositories. For
     information on the types used in the callbacks, see the Python stdlib
-    documentation for :py:mod:`argparse` and :py:mod:`configparser`.
+    documentation for :py:mod:`argparse`.
 
     As an example, a simple clone task can be defined like so:
 
@@ -87,19 +77,20 @@ class Task(
         def clone_task():
             return plug.Task(act=act)
 
-    For more elaborate instructions on creating tasks, see the tutorial.
+    If your task plugin also needs to access the configuration file, then
+    implement the separate ``config_hook`` hook. For more elaborate
+    instructions on creating tasks, see the tutorial.
     """
 
     def __new__(
         cls,
         act: Callable[[Path, API], Result],
         add_option: Optional[Callable[[ArgumentParser], None]] = None,
-        handle_args: Optional[Callable[[ConfigParser], None]] = None,
-        handle_config: Optional[Callable[[Namespace], None]] = None,
+        handle_args: Optional[Callable[[Namespace], None]] = None,
         persist_changes: bool = False,
     ):
         return super().__new__(
-            cls, act, add_option, handle_args, handle_config, persist_changes
+            cls, act, add_option, handle_args, persist_changes
         )
 
     # The init method is just added for documentation purposes
@@ -107,8 +98,7 @@ class Task(
         self,
         act: Callable[[Path, API], Result],
         add_option: Optional[Callable[[ArgumentParser], None]] = None,
-        handle_args: Optional[Callable[[ConfigParser], None]] = None,
-        handle_config: Optional[Callable[[Namespace], None]] = None,
+        handle_args: Optional[Callable[[Namespace], None]] = None,
         persist_changes: bool = False,
     ):
         """
@@ -120,8 +110,6 @@ class Task(
                 CLI parser.
             handle_args: An optional callback function that receives the parsed
                 CLI args.
-            handle_config: An optional callback function that receives the
-                config parser.
             persist_changes: If True, the task requires that changes to the
                 repository that has been acted upon be persisted. This means
                 different things in different contexts (e.g.  whether the task
