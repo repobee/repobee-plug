@@ -81,7 +81,7 @@ class Result(
 def HookResult(hook, status, msg, data=None) -> Result:
     """Backwards compat function.
 
-    .. deprecate:: 0.12.0
+    .. deprecated:: 0.12.0
 
         Replaced by :py:class:`Result`.
     """
@@ -143,7 +143,9 @@ class ExtensionCommand(
         name: str,
         help: str,
         description: str,
-        callback: Callable[[argparse.Namespace, _apimeta.API], None],
+        callback: Callable[
+            [argparse.Namespace, Optional[_apimeta.API]], Optional[Result]
+        ],
         requires_api: bool = False,
         requires_base_parsers: Optional[List[BaseParser]] = None,
     ):
@@ -180,7 +182,9 @@ class ExtensionCommand(
         name: str,
         help: str,
         description: str,
-        callback: Callable[[argparse.Namespace, _apimeta.API], None],
+        callback: Callable[
+            [argparse.Namespace, Optional[_apimeta.API]], Optional[Result]
+        ],
         requires_api: bool = False,
         requires_base_parsers: Optional[Iterable[BaseParser]] = None,
     ):
@@ -194,7 +198,9 @@ class ExtensionCommand(
                 describing the usage of the command.
             callback: A callback function that is called if this command is
                 used on the CLI. It is passed the parsed namespace and the
-                platform API, and is expected to return nothing.
+                platform API. It may optionally return a result mapping on
+                the form (name: str -> List[Result]) that's reported by
+                RepoBee.
             requires_api: If True, the base arguments required for the platform
                 API are added as options to the extension command, and the
                 platform API is then passed to the callback function. It is
