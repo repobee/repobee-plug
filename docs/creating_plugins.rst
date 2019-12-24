@@ -302,4 +302,211 @@ parts for details.
 
 Creating extension command plugins
 ==================================
-To be added ...
+An extension command is a top-level command in the RepoBee CLI which seamlessly
+integrates with the base tool. Creating an extension command is fairly similar
+to creating an advanced task, but it is somewhat easier as an extension
+command does not need to integrate into an existing command, making the
+definition simpler. For a user, calling an extension command is as simple as
+enabling the plugin and running ``repobee <EXT_COMMAND_NAME>``. As an example,
+the built-in ``config-wizard`` command is actually implemented as an extension
+command. Before we dive into how to create an extension command plugin, let's
+first have a look at the core components that make up extension commands.
+
+Extension command components
+----------------------------
+Extension commands consist of two primary components: the
+:py:class:`~repobee_plug.ExtensionCommand` container and the
+:py:class:`~repobee_plug.ExtensionParser` parser class.
+
+The ExtensionParser
++++++++++++++++++++
+A :py:class:`~repobee_plug.ExtensionParser` is fairly straightforward: it's
+simply a thin wrapper around an :py:class:`argparse.ArgumentParser` that's
+instantiated without any arguments. It can then be used identically to an
+:py:class:`argparse.ArgumentParser`.
+
+.. code-block:: python
+    :caption: Example usage of an ExtensionParser
+
+    import repobee_plug as plug
+
+    parser = plug.ExtensionParser()
+    parser.add_argument(
+        "-n",
+        "--name",
+        help="Your name.",
+        required=True,
+        type=str,
+    )
+    parser.add_argument(
+        "-a",
+        "--age",
+        help="Your age.",
+        type=int,
+    )
+
+The :py:class:`~repobee_plug.ExtensionParser` is then added to an extension
+command, which we'll have a look at next.
+
+The ExtensionCommand
+++++++++++++++++++++
+:py:class:`~repobee_plug.ExtensionCommand` defines an extension command in much
+the same way as a :py:class:`~repobee_plug.Task` defines a task. Most of its
+properties are self-explanatory, but the ``callback``, ``requires_api`` and
+``requires_base_parsers`` deserve a closer look.
+
+First of all, ``requires_base_parsers`` is an interesting feature which allows
+an extension command to request parser components from RepoBee's core parser.
+The currently available parsers are defined in the
+:py:class:`~repobee_plug.BaseParser` enum. As an example, if you provide
+``requires_base_parsers=[plug.BaseParser.STUDENTS]``, the
+``--students`` and ``--students-file`` options are added to the extension
+parser. Not only does this add options to your parser, but they are processed
+automatically as well. In the case of the students parser, RepoBee will
+automatically check the configuration file for the ``students_file`` option, and
+also parse the raw CLI input into a list of :py:class:`~repobee_plug.Team`
+tuples for you. In essence, the parsers you can request to have added are parsed
+and processed automatically by RepoBee in such a way that your extension command
+can provide the same experience as RepoBee's core commands, without having to do
+any work. This is only semi-well documented at the moment, but it's easy enough
+to simply try passing different base parsers to the ``requires_base_parsers``.
+
+The ``callback`` should be a function that accepts the parsed arguments from the
+extension command's parser, as well as an :py:class:`~repobee_plug.API`
+instance. Again, if the command requires any base parsers, the arguments from
+these will be both parsed and processed. The ``api`` argument is only passed a
+meaningful value if ``requires_api=True``, otherwise ``None`` is passed.
+
+Basic
+-----
+Of course, the `repobee-plugin-cookiecutter template
+<https://github.com/repobee/repobee-plugin-cookiecutter>`_ has starter code for
+extension commands. There's a basic and an advanced template, and we'll start
+with the basic one.
+
+
+.. code-block:: bash
+    :caption: Generating a basic extension command plugin
+
+    $ python3 -m cookiecutter gh:repobee/repobee-plugin-cookiecutter
+    author []: Simon Larsén
+    email []: slarse@slar.se
+    github_username []: slarse
+    plugin_name []: exampleplug
+    short_description []: An example task plugin
+    Select generate_basic_task:
+    1 - no
+    2 - yes
+    Choose from 1, 2 (1, 2) [1]:
+    Select generate_advanced_task:
+    1 - no
+    2 - yes
+    Choose from 1, 2 (1, 2) [1]:
+    Select generate_basic_extension_command:
+    1 - no
+    2 - yes
+    Choose from 1, 2 [1]: 2
+    Select generate_advanced_extension_command:
+    1 - no
+    2 - yes
+    Choose from 1, 2 [1]:
+    $ ls
+    repobee-exampleplug
+
+It will again generate the same directory structure as for tasks, but the plugin
+will look something like this instead:
+
+.. code-block:: bash
+    :caption: exampleplug.py
+
+    import argparse
+    import configparser
+    from typing import List, Mapping, Optional
+
+    import repobee_plug as plug
+
+    PLUGIN_NAME = "exampleplug"
+
+    def callback(
+        args: argparse.Namespace, api: Optional[plug.API]
+    ) -> Optional[Mapping[str, List[plug.Result]]]:
+        # do whatever you want to do!
+        return {
+            PLUGIN_NAME: [plug.Result(
+                name=PLUGIN_NAME, status=plug.Status.SUCCESS, msg="Hello, world!"
+            )]
+        }
+
+    @plug.repobee_hook
+    def create_extension_command() -> plug.ExtensionCommand:
+        """Create an extension command with no arguments.
+
+        Returns:
+            The extension command to add to the RepoBee CLI.
+        """
+        return plug.ExtensionCommand(
+            parser=plug.ExtensionParser(), # empty parser
+            name="example-command",
+            help="An example command.",
+            description="An example extension command.",
+            callback=callback,
+        )
+
+This extension command does nothing, it simply reports some results to RepoBee
+with the :py:class:`repobee_plug.Result` data structure. Installing this (see
+:ref:`install local`) and enabling it (again with ``-p exampleplug``) will add
+the ``example-command`` command to your RepoBee CLI.
+
+.. code-block:: bash
+
+	$ repobee -p exampleplug example-command
+	[INFO] hook results for exampleplug
+
+	exampleplug: SUCCESS
+	Hello, world!
+
+Not very interesting, but it gives you a base to start on to do very simple
+extension commands. To also add command line options, configuration file parsing
+and the like, see the advanced extension.
+
+
+Advanced
+--------
+To generate the advanced extension command, simply select it when running the
+template generation.
+
+.. code-block:: bash
+    :caption: Generating an advanced extension command plugin
+
+    $ python3 -m cookiecutter gh:repobee/repobee-plugin-cookiecutter
+    author []: Simon Larsén
+    email []: slarse@slar.se
+    github_username []: slarse
+    plugin_name []: exampleplug
+    short_description []: An example task plugin
+    Select generate_basic_task:
+    1 - no
+    2 - yes
+    Choose from 1, 2 (1, 2) [1]:
+    Select generate_advanced_task:
+    1 - no
+    2 - yes
+    Choose from 1, 2 (1, 2) [1]:
+    Select generate_basic_extension_command:
+    1 - no
+    2 - yes
+    Choose from 1, 2 [1]:
+    Select generate_advanced_extension_command:
+    1 - no
+    2 - yes
+    Choose from 1, 2 [1]: 2
+    $ ls
+    repobee-exampleplug
+
+Again, it will have the exact same directory structure as all the other plugins
+that we've generated, and all differences are contained in ``exampleplug.py``.
+This extension command adds options, uses the configuration file and has
+internal state. It is much too large to include here, but I recommend that you
+simply read the source code and try to figure out how it works. Given the time,
+I will add more elaborate instructions here, but right now this is as far as I
+can take it.
