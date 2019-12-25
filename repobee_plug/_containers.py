@@ -144,7 +144,8 @@ class ExtensionCommand(
         help: str,
         description: str,
         callback: Callable[
-            [argparse.Namespace, Optional[_apimeta.API]], Optional[Result]
+            [argparse.Namespace, Optional[_apimeta.API]],
+            Optional[Mapping[str, Result]],
         ],
         requires_api: bool = False,
         requires_base_parsers: Optional[List[BaseParser]] = None,
@@ -183,7 +184,8 @@ class ExtensionCommand(
         help: str,
         description: str,
         callback: Callable[
-            [argparse.Namespace, Optional[_apimeta.API]], Optional[Result]
+            [argparse.Namespace, Optional[_apimeta.API]],
+            Optional[Mapping[str, Result]],
         ],
         requires_api: bool = False,
         requires_base_parsers: Optional[Iterable[BaseParser]] = None,
